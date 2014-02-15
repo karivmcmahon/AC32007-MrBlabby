@@ -227,7 +227,14 @@ public class Tweet extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
-		System.out.println("delete");
+		TweetModel Tweet = new TweetModel();
+		System.out.println(request.getRequestURI());
+		StringSplitter SS = new StringSplitter();
+		String args[]  = SS.SplitRequestPath(request);
+		int id = Integer.parseInt(args[2]);
+		Tweet.setDatasource(_ds);
+		Tweet.deleteTweet(id);
+		
 	}
 
 	

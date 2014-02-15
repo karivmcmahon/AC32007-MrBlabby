@@ -23,6 +23,20 @@ function()
 $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Tweet #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+<script>
+function deleteTweet(tweetID)
+{
+    $.ajax({
+        url:"${pageContext.request.contextPath}/Tweet/" + tweetID,
+        type:"DELETE",
+        cache:false
+    }).done(function() {
+        //Refresh page
+        document.location.reload(true);
+    });
+}
+
+</script>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <title>Tweet-Twoo!</title>
 </head>
@@ -78,15 +92,25 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Tweet #loaddiv').fadeIn("slow");
 	 <br/>
 	<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
 	<span class="pinkFont">@<%=md.getUsername() %>
-	<br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span>
-	<% 
+	<br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span></span>
 	
-	if(md.getUserid() == 1)
+
+
+	<br><br><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span>
+	
+	<% 
+	UserStore u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+	if(u == null)
+	{
+		System.out.println("null");
+	}
+	System.out.println(u.getUsername());
+		if(md.getUserid() == u.getUserid())
 	{
 	%>
-	 <input type="button" name="deleteTweet" value="delete" class="button" style="margin-left:60%;">
+	 <input type="image" class="images" onclick="deleteMessage(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/>
 	 <%} %>
-	<br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span></span>
+		
 	<br/> <br/><br/>
 	</div>
 	
