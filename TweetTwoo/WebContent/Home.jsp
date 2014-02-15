@@ -13,6 +13,16 @@
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- Ajax script to refresh tweet timeline every minute, fade out is fast to show refresh occuring -->
+<script>
+var auto_refresh = setInterval(
+function()
+{
+ $.ajaxSetup({ cache: false });
+$('#loaddiv').fadeOut('fast').load('/TweetTwoo/Tweet #loaddiv').fadeIn("slow");
+}, 60000);
+</script>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <title>Tweet-Twoo!</title>
 </head>
@@ -20,23 +30,11 @@
 <body class="general">
 
 
-
-	<div class="header">
-		<ul class="headerBar">
-			<li class="link2"><a href="" class="tweetTwoo">Tweet-Twoo!</a></li>
-			<li class="owlLink"><img src="${pageContext.request.contextPath}/images/rotate100owl.png" width="30px" height="30px"/></li>
-			<!--  Owl logo found online and is free to use under public domain - site can be found here http://www.clipartlord.com/free-cute-cartoon-owls-perched-branch-clip-art/ -->
-			<li class="link"><a href="/TweetTwoo/Tweet" >Home</a></li>
-			<li class="link"><a href="/TweetTwoo/Profile">Profile</a></li>
-			<li class="link"><a href="/TweetTwoo/Following">Following</a></li>
-			<li class="link"><a href="/TweetTwoo/Follower">Followers</a></li>
-			<li class="link"><a href="/TweetTwoo/Suggestions">Suggestions</a></li>
-			<li class="link"><a href="/TweetTwoo/Logout">Log Out</a></li>
-		</ul>
-	</div>
-	
+	<jsp:include page="Header.jsp" />
 	
 	<div class=main>
+	
+	
 	<div class="timeline">
 	<p class="bolderFont">What's Happening ?
 	<br><span class="smallFont">Tell the world.<br>Post a Tweet : </span></p>
@@ -51,6 +49,7 @@
 	
 	<div class="timeline">
 	<p class="bolderFont">Your Friends Tweet's : </p>
+	<div id="loaddiv">
 	<%
 	
 
@@ -97,16 +96,12 @@
 	}
 
 	%>
-	
+	</div>
+	</div>
 	</div>
 	
-	<div class="footer">
+	<jsp:include page="Footer.jsp" />
 	
-		<center>
-		 Copyright © Kari McMahon 2014
- 		</center>
-	</div>
 	
-	</div>
 </body>
 </html>

@@ -60,11 +60,7 @@ Password: <input type="password" name="password"><br>
 </form>
 </div>
 
-<div class="footer">
-<center>
- Copyright © Kari McMahon 2014
- </center>
-</div>
+<jsp:include page="Footer.jsp" />
 
 
 </div>

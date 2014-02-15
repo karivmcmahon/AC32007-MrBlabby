@@ -62,6 +62,14 @@ public class Profile extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get information of user current logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		else
+		{
+		if(u.getLoggedIn() == true)
+		{
 		//Set up data sources
 		tweetModel.setDatasource(_ds);
 		profModel.setDatasource(_ds);
@@ -73,6 +81,12 @@ public class Profile extends HttpServlet {
 		//Then forward request to Profile.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp");  
 		rd.forward(request, response);
+		}
+		else
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		}
 		
 		
 	}

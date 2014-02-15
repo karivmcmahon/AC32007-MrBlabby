@@ -62,16 +62,32 @@ public class Follower extends HttpServlet {
 				UserStore u = new UserStore();
 				//Get session for user currently logged in
 				u = (UserStore) request.getSession().getAttribute("currentSeshUser");
-				Iterator<ProfileStore> iterator;
-				FollowingModel fm = new FollowingModel();
-				fm.setDatasource(_ds);
-				//Get users followers by passing current logged in users info
-				LinkedList<ProfileStore> lps = fm.getFollowers(u);
-				request.setAttribute("Followers", lps); 
-				//forward followers to follower.jsp
-				RequestDispatcher rd = request.getRequestDispatcher("/Follower.jsp"); 
+				if( u == null)
+				{
+					response.sendRedirect("/TweetTwoo/SignUp.jsp");
+				}
+				else
+				{
+				if(u.getLoggedIn() == true)
+				{
+					Iterator<ProfileStore> iterator;
+					FollowingModel fm = new FollowingModel();
+					
+					fm.setDatasource(_ds);
+					//Get users followers by passing current logged in users info
+					LinkedList<ProfileStore> lps = fm.getFollowers(u);
+					request.setAttribute("Followers", lps); 
+					//forward followers to follower.jsp
+					RequestDispatcher rd = request.getRequestDispatcher("/Follower.jsp"); 
 
-				rd.forward(request, response);
+					rd.forward(request, response);
+				}
+				else
+				{
+					response.sendRedirect("/TweetTwoo/SignUp.jsp");
+				}
+			}
+				
 	}
 
 	/**
@@ -82,6 +98,12 @@ public class Follower extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		if(u.getLoggedIn() == true)
+		{
 		//Gets user id  from the the person user selected to follow
 		int id=Integer.parseInt(request.getParameter("userid"));
 		FollowingModel fm = new FollowingModel();
@@ -90,6 +112,12 @@ public class Follower extends HttpServlet {
 		fm.followUser(id,u);
 		//redirect back to suggestions
 		response.sendRedirect("/TweetTwoo/Suggestions");
+		}
+		else
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		
 		
 		
 	}

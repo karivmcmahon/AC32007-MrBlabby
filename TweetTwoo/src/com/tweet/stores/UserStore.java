@@ -8,6 +8,8 @@ public class UserStore {
 	private String password;
 	private String email;
 	private boolean valid;
+	public boolean loggedIn = false;
+	
 	
 	public void setUserid(int id)
 	{
@@ -68,5 +70,17 @@ public class UserStore {
 	{
 		return email;
 	}
+	
+	public void setLoggedIn(boolean logged)
+	{
+		loggedIn = logged;
+	}
+	
+	public boolean getLoggedIn()
+	{
+		System.out.println("logged in " + loggedIn);
+		return loggedIn;
+	}
+	
 
 }

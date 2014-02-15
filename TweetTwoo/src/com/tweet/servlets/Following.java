@@ -62,6 +62,14 @@ public class Following extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		else
+		{
+		 if(u.getLoggedIn() == true)
+		 {
 		Iterator<ProfileStore> iterator;
 		FollowingModel fm = new FollowingModel();
 		fm.setDatasource(_ds);
@@ -72,6 +80,13 @@ public class Following extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/Following.jsp"); 
 
 		rd.forward(request, response);
+		}
+		else
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		}
+		
 		
 	}
 

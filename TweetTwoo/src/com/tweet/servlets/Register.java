@@ -86,6 +86,7 @@ public class Register extends HttpServlet {
 		{
 			//Set users id
 			u.setUserid(id);
+			u.setLoggedIn(true);
 			//Set session true
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSeshUser", u);

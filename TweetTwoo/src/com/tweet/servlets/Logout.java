@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.tweet.stores.UserStore;
+
 /**
  * Servlet implementation class Logout
  */
@@ -37,6 +39,8 @@ public class Logout extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//Invalidate session
+		UserStore u = new UserStore();
+		u.setLoggedIn(false);
 		request.getSession().invalidate();
 		//Redirect user to sign up/log in page once they have logged out
 		response.sendRedirect("/TweetTwoo/SignUp.jsp");

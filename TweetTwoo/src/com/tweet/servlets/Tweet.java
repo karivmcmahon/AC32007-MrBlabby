@@ -81,8 +81,16 @@ public class Tweet extends HttpServlet {
 		int x = 0;
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		else
+		{
 		StringSplitter SS = new StringSplitter();
 		String args[]  = SS.SplitRequestPath(request);
+	if(u.getLoggedIn() == true)
+	{
 		if (args.length < 3 && args[1].toString().equals("Tweet") ){
 	
 				//Set up data source
@@ -157,6 +165,12 @@ public class Tweet extends HttpServlet {
 		default:
 			break;
 		} 
+		}
+		else
+		{
+		  response.sendRedirect("/TweetTwoo/Signup.jsp");
+		}
+		}
 		
 		
 		
@@ -172,6 +186,14 @@ public class Tweet extends HttpServlet {
 		TweetModel tm = new TweetModel();
 		//Get current user logged info
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		else
+		{
+			if(u.getLoggedIn() == true)
+			{
 		//Get information in textbox from Home.jsp
 		t.setTweet(request.getParameter("postTweet"));
 		//Get timestamp  when it was posted
@@ -192,6 +214,13 @@ public class Tweet extends HttpServlet {
 		
 		//Redirect to home timeline once tweet created 
 		response.sendRedirect("/TweetTwoo/Tweet");
+		}
+		else
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+	}
+		
 		
 		
 	}

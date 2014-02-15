@@ -62,6 +62,14 @@ public class EditProfile extends HttpServlet {
 		ProfileStore ps = new ProfileStore();
 		//Get information of user who is currently logged in
 		user = (UserStore)  request.getSession().getAttribute("currentSeshUser");
+		if(user == null)
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		else
+		{
+		if(user.getLoggedIn() == true)
+		{
 		//Set up data source and get information for editing profile
 		prof.setDatasource(_ds);
 		ps = prof.getProfileEdit(user);
@@ -70,6 +78,12 @@ public class EditProfile extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/EditProfile.jsp"); 
 
 		rd.forward(request, response);
+		}
+		else
+		{
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		}
 		
 	}
 
