@@ -1,0 +1,348 @@
+@CHARSET "ISO-8859-1";
+
+body.signUp
+{
+	/* The image below is free to use as long as attribution is given. It belongs to http://www.flickr.com/photos/zitzit/3834235147/in/photostream/ */
+	background:url("../images/blur.jpg") no-repeat center center fixed; 
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+   background-color:black;
+}
+
+body.general
+{
+	
+	background: -webkit-linear-gradient(0deg, #FF009A, black); /* For Safari */
+background: -o-linear-gradient(0deg, #FF009A, black); /* For Opera 11.1 to 12.0 */
+background: -moz-linear-gradient(0deg, #FF009A, black); /* For Firefox 3.6 to 15 */
+background: linear-gradient(0deg,#FF009A,black); /* Standard syntax (must be last) */
+background-repeat:no-repeat;
+	 
+
+
+	
+}
+
+html
+{
+	min-height:100%;
+}
+
+
+.header
+{
+  width:100%;
+}
+
+.main
+{
+	width:980px;
+	margin-left:auto;
+	margin-right:auto;
+	
+	
+
+}
+
+
+ul.headerBar
+{
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	color:white;
+    width: 100%;
+    height:60px;
+	background-color: black;
+	/* code for making nav bar a gradient found here http://stackoverflow.com/questions/8793414/how-can-i-make-the-gradient-stops-in-a-css3-linear-gradient **/
+    background-image: linear-gradient( 
+            top, 
+            rgba( 255, 255, 255, .4 ) 0%, 
+            rgba( 255, 255, 255, .1 ) 50%,
+            rgba( 255, 255, 255, .0 ) 50.5%, 
+            rgba( 255, 255, 255, .0 ) 100% );
+        background-image: -webkit-linear-gradient( 
+            top, 
+            rgba( 255, 255, 255, .4 ) 0%, 
+            rgba( 255, 255, 255, .1 ) 50%,
+            rgba( 255, 255, 255, .0 ) 50.5%, 
+            rgba( 255, 255, 255, .0 ) 100% );
+        background-image: -moz-linear-gradient( 
+            top, 
+            rgba( 255, 255, 255, .4 ) 0%, 
+            rgba( 255, 255, 255, .1 ) 50%,
+            rgba( 255, 255, 255, .0 ) 50.5%, 
+            rgba( 255, 255, 255, .0 ) 100% );
+        background-image: -o-linear-gradient( 
+            top, 
+            rgba( 255, 255, 255, .4 ) 0%, 
+            rgba( 255, 255, 255, .1 ) 50%,
+            rgba( 255, 255, 255, .0 ) 50.5%, 
+            rgba( 255, 255, 255, .0 ) 100% );
+        background-image: -ms-linear-gradient( 
+            top, 
+            rgba( 255, 255, 255, .4 ) 0%, 
+            rgba( 255, 255, 255, .1 ) 50%,
+            rgba( 255, 255, 255, .0 ) 50.5%, 
+            rgba( 255, 255, 255, .0 ) 100% );
+}
+
+li.link
+{
+	display:inline;
+	font-family: 'Glegoo', serif;
+	font-size:150%;
+	margin-right:5%;
+	margin-left:2%;
+	
+	
+	
+}
+li.link2
+{
+	display:inline;
+	margin-left:2%;
+    margin-right:0.5%;
+	font-size:150%;
+}
+
+li.owlLink
+{
+	display:inline;
+	margin-right:7%;
+}
+
+li.link1
+{
+	display:inline;
+	font-family: 'Glegoo', serif;
+	font-size:150%;
+	margin-right:0.5%;
+	margin-left:40%;
+}
+
+
+div.main
+{
+	
+}
+
+div.left
+{
+	width:50%;
+	margin-top:30%;
+	margin-bottom:10%;
+	float:left;
+	
+}
+
+div.right
+{
+	border:2px;
+	border-radius:25px;
+	width:40%;
+	margin-top:30%;
+	float:right;
+	box-shadow: 10px 10px 5px #888888;
+	background-color:white;
+	text-align:center;
+}
+
+div.timeline
+{
+	width:90%;
+	margin-top:2.5%;
+	border:2px;
+	border-radius:25px;
+	box-shadow: 10px 10px 5px #888888;
+	background-color:black;
+    background: -webkit-linear-gradient(0deg,#696669, black); /* For Safari */
+	background: -o-linear-gradient(0deg,#696669, black); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(0deg,#696669 , black); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(0deg,#696669,black); /* Standard syntax (must be last) */
+	background-repeat:no-repeat;
+	margin-bottom:2%; 
+	text-align:center;
+}
+div.signInRight
+{
+	border:2px;
+	border-radius:25px;
+	width:40%;
+	margin-top:5%;
+	float:right;
+	box-shadow: 10px 10px 5px #888888;
+	background-color:white;
+	text-align:center;
+}
+
+
+
+p.font
+{
+    font-family: 'Glegoo', serif;
+	font-size:175%;
+	color:white;
+	float:left;
+}
+
+.bolderFont
+{
+ 	font-family: 'Glegoo', serif; 
+	font-size:200%;
+	font-style:bold;
+	color:#FF009A;
+	
+}
+
+.boldishFont
+{
+	font-family: 'Glegoo', serif;
+	font-style:italic;
+	font-size:100%;
+	color:white;
+}
+
+.userFont
+{
+	font-family: 'Glegoo', serif; 
+	font-size:150%;
+	color:#FF009A;
+}
+
+.imgBorder
+{
+	border:4px solid;
+	border-radius:25px;
+	border-color:white;
+}
+
+.userimgBorder
+{
+	border:2px;
+	border-radius:15px;
+
+}
+
+.smallFont
+{
+	font-family: 'Glegoo', serif;
+	font-style:italic;
+	font-size:70%;
+	color:white;
+}
+
+.boldFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:120%;
+	font-style:bold;
+	color:#FF009A;
+}
+
+.pinkFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:75%;
+	color:#FF009A;
+	
+}
+
+.whiteFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:110%;
+	color:white;
+}
+
+.tweetDiv
+{
+	margin-left:20%;
+	margin-right:20%;
+	text-align:left;
+	border-bottom: 2px solid grey;
+}
+
+
+.button
+{
+	background-color:#FF009A; 	
+	font-family: 'Glegoo', serif;
+	font-size:100%;
+}
+
+.textarea
+{
+	font-family: 'Glegoo', serif;
+	font-size:100%;
+}
+.regFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:120%;
+	color:white;
+}
+
+.regFont2
+{
+	font-family: 'Glegoo', serif;
+	font-size:120%;
+	color:black;
+}
+
+.tweetFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:80%;
+	color:white;
+	
+}
+
+.timeFont
+{
+	color:#FF009A; 	
+	font-family: 'Glegoo', serif;
+	font-size:60%;
+}
+
+.italics
+{
+    font-family: 'Glegoo', serif;
+	font-size:70%;
+	color:white;
+	float:left;
+	font-style:italic;
+}
+
+.footer
+{
+	color:white;
+	font-family: 'Glegoo', serif;
+	font-size:100%;
+	height:50px;
+	clear:both;
+     text-align:center;
+}
+
+
+
+a
+{
+	color:white;
+	text-decoration:none;
+}
+
+a:hover
+{
+	color:#FF009A;
+}
+
+.tweetTwoo
+{
+	font-family: 'Vibur', cursive;
+	font-size:120%;
+	color:#FF009A;
+}
+
