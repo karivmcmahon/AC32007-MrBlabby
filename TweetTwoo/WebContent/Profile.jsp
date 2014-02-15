@@ -14,6 +14,21 @@
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+function deleteTweet(tweetID)
+{
+    $.ajax({
+        url:"${pageContext.request.contextPath}/Tweet/" + tweetID,
+        type:"DELETE",
+        cache:false
+    }).done(function() {
+        //Refresh page
+        document.location.reload(true);
+    });
+}
+
+</script>
 <title>Tweet-Twoo!</title>
 </head>
 <body class="general">
@@ -89,7 +104,7 @@
 	
 	<div class="tweetDiv"> 
 	 	<br/>
-		<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span></span>
+		<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span><input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
 		<br/> <br/><br/>
 	</div>
 	<%

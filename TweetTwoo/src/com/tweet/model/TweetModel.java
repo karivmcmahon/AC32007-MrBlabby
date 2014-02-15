@@ -182,7 +182,7 @@ public class TweetModel {
 		int id = u.getUserid();
 		
 		//Set up query to get specific users tweets
-		String sqlQuery = "SELECT tweet,time,name,username FROM tweets JOIN users WHERE userid = ? AND tweets.user_tweet_id = ? ORDER BY time DESC;";
+		String sqlQuery = "SELECT tweet,time,name,username,tweetid FROM tweets JOIN users WHERE userid = ? AND tweets.user_tweet_id = ? ORDER BY time DESC;";
 		
 		
 		try {
@@ -226,6 +226,7 @@ public class TweetModel {
 				ps.setTime(rs.getTimestamp("time"));
 			    ps.setName(rs.getString("name"));
 			    ps.setUsername(rs.getString("username"));
+			    ps.setTweetid(rs.getInt("tweetid"));
 				psl.add(ps);
 			}
 		} 

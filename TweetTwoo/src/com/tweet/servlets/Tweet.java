@@ -87,90 +87,59 @@ public class Tweet extends HttpServlet {
 		}
 		else
 		{
-		StringSplitter SS = new StringSplitter();
-		String args[]  = SS.SplitRequestPath(request);
-	if(u.getLoggedIn() == true)
-	{
-		if (args.length < 3 && args[1].toString().equals("Tweet") ){
-	
-				//Set up data source
-				Tweet.setDatasource(_ds);
-				//Get tweets info
-			    psl = Tweet.getTweets(u); 
-				request.setAttribute("Tweets", psl); 
-				//forward tweets to Home.jsp
-				 rd = request.getRequestDispatcher("/Home.jsp"); 
-
-				rd.forward(request, response);
-
-		}
 		
-		int command;
-		try{
-			
-		
-				command =(Integer)CommandsMap.get(args[2]);
-			 
-		  
-		   
-		}catch(Exception et){
-			//error("Bad Operator",out);
-			return;
-		}
-		System.out.println("Command"+command);
-		
-		String name;
-		try
+		if(u.getLoggedIn() == true)
 		{
-			
-					if(args[2].toString().equals("id"))
-					{
-						x = Integer.parseInt(args[3]);
-					}
-					if(args[2].toString().equals("name"))
-					{
-						 username = args[3].toString();
-				
-					}
-				
-				
-			   
-			   
-		}
-		catch(Exception et)
+		if(request.getRequestURI().equals(request.getContextPath() + "/Tweet"))
 		{
-			//	error("Bad numbers in calc",out);
-				return;			
-		}
-		switch (command){
-		  case 1:
+			//Set up data source
 			Tweet.setDatasource(_ds);
-			t.setTweetid(x);
 			//Get tweets info
-			psl = Tweet.getTweetsByID(t); 
+		    psl = Tweet.getTweets(u); 
 			request.setAttribute("Tweets", psl); 
 			//forward tweets to Home.jsp
 			 rd = request.getRequestDispatcher("/Home.jsp"); 
-			 rd.forward(request, response);
-			 break;
-		  case 2:
-			  Tweet.setDatasource(_ds);
-			  u.setUsername(username);
-			  //Get tweets info
-			  psl = Tweet.getTweetsByUsername(u); 
-			  request.setAttribute("Tweets", psl); 
-			  //forward tweets to Home.jsp
-		      rd = request.getRequestDispatcher("/Home.jsp"); 
-		      rd.forward(request, response); 
-		default:
-			break;
-		} 
+
+			rd.forward(request, response);
+		}
+		else
+		{
+			int lastSlash = request.getRequestURI().lastIndexOf('/');
+			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+			try
+			{
+				int id = Integer.valueOf(endOfUrl);
+				Tweet.setDatasource(_ds);
+				t.setTweetid(id);
+				//Get tweets info
+				psl = Tweet.getTweetsByID(t); 
+				request.setAttribute("Tweets", psl); 
+				//forward tweets to Home.jsp
+				rd = request.getRequestDispatcher("/Home.jsp"); 
+				rd.forward(request, response);
+			}
+			catch(Exception e)
+			{
+				String usernames = endOfUrl.toString();
+				System.out.println("u " + usernames);
+				 Tweet.setDatasource(_ds);
+				  u.setUsername(usernames);
+				  //Get tweets info
+				  psl = Tweet.getTweetsByUsername(u); 
+				  request.setAttribute("Tweets", psl); 
+				  //forward tweets to Home.jsp
+			      rd = request.getRequestDispatcher("/Home.jsp"); 
+			      rd.forward(request, response); 
+			}
+			}
 		}
 		else
 		{
 		  response.sendRedirect("/TweetTwoo/Signup.jsp");
 		}
-		}
+	}
+		
+		
 		
 		
 		
