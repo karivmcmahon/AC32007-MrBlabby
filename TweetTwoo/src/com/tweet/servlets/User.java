@@ -9,31 +9,32 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.tweet.libs.StringSplitter;
 import com.tweet.libs.conn;
-import com.tweet.model.UserModel;
+import com.tweet.model.ProfileModel;
 import com.tweet.stores.UserStore;
 
 /**
- * Servlet implementation class Register
+ * Servlet implementation class EditProfile
  */
 @WebServlet(
 		urlPatterns = { 
-		"/Register", 
-		"/Register/*"
+		"/User", 
+		"/User/*"
 }, 
 initParams = { 
 		@WebInitParam(name = "data-source", value = "jdbc/faultdb")
 })
-public class Register extends HttpServlet {
+public class User extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Register() {
+    public User() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,13 +49,11 @@ public class Register extends HttpServlet {
            _ds=db.assemble(config);
    	}
 
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	/**
@@ -62,44 +61,22 @@ public class Register extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int  id = 0;
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		ProfileModel prof = new ProfileModel();
 		UserStore u = new UserStore();
-		UserModel um = new UserModel();
-		//Get information from textboxs in register section of SignUp.jsp
-		u.setUsername(request.getParameter("newUsername"));
-		u.setPassword(request.getParameter("newPassword"));
-		u.setEmail(request.getParameter("newEmail"));
-		u.setName(request.getParameter("name"));
-		u.setPermission(1);
-		try
-		{
-			//Set up data source
-			um.setDatasource(_ds);
-			//Attempt to register user
-			 id = um.registerUser(u);
-			
-		}
-		catch(Exception e)
-		{
-		}
+		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		System.out.println(request.getRequestURI());
+		StringSplitter SS = new StringSplitter();
+		String args[]  = SS.SplitRequestPath(request);
+		int id = Integer.parseInt(args[2]);
+		prof.setDatasource(_ds);
+		prof.deleteAccount(id);
+		//Redirect user to sign up/log in page once they have logged out
+	//	response.sendRedirect("/TweetTwoo/Search.jsp");
 		
-		if(id != 0)
-		{
-			//Set users id
-			u.setUserid(id);
-			u.setLoggedIn(true);
-			//Set session true
-			HttpSession session = request.getSession(true);
-			session.setAttribute("currentSeshUser", u);
-			//Let user access there timeline
-			response.sendRedirect("/TweetTwoo/Tweet");
-		}
-		else
-		{
-			//If user cant be registered redirect to sign up 
-			response.sendRedirect("/SignUp.jsp");
-		}
 	}
 
 }
-

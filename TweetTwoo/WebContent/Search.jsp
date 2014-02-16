@@ -15,6 +15,20 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <title>Tweet-Twoo!</title>
+<script>
+function deleteAccount(userID)
+{
+    $.ajax({
+        url:"${pageContext.request.contextPath}/User/" + userID,
+        type:"DELETE",
+        cache:false
+    }).done(function() {
+        //Refresh page
+        document.location.reload(true);
+    });
+}
+
+</script>
 </head>
 <body class="general">
 
@@ -37,7 +51,7 @@
 	<% 	List<ProfileStore> u = (List<ProfileStore>)request.getAttribute("Profiles");
 	if (u==null){
 	 %>
-		<p>You are not following anyone</p>
+	
 	<% 
 	}
 	else
@@ -61,10 +75,11 @@
 	<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
 	<span class="pinkFont">@<%=md.getUsername() %><br></span>
 	<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %></span><br>
+	<span class="tweetFont" style="margin-left:2%;float:left;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
 	<%if(md.getFollowing() == true)
 		{
 	%>	<form action="/TweetTwoo/Following" method="post">
-		<input type="submit" value="Unfollow" class="button" style="margin-left:70%">
+		<input type="submit" value="Unfollow" class="button" style="margin-left:80%;white-space:nowrap;">
 		<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
 		</form>
 		<%
@@ -73,14 +88,36 @@
 	{
 		%>
 		<form action="/TweetTwoo/Follower" method="post">
-		<input type="submit" value="Follow" class="button" style="margin-left:70%">
+		<input type="submit" value="Follow" class="button" style="margin-left:80%;white-space:nowrap;">
 		<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
 		</form>
 		<%
 	}
 		%>
-	<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
+		<%
+		UserStore us = new UserStore();
+		us = (UserStore)request.getSession().getAttribute("currentSeshUser");
+		if(us.getPermission() == 2 && md.getPermission() == 1 || us.getPermission() == 3 && md.getPermission() == 1)
+		{
+		%>
+
+			<input type="button" value="Delete" class="button" style="margin-left:80%;white-space:nowrap;" onclick="deleteAccount(<%= md.getUserid()%>)">
+			
+
+		<%
+		}
+		else if(us.getPermission() == 3 && md.getPermission() == 2)
+		{
+		%>
+			<input type="button" value="Delete" class="button" style="margin-left:80%;white-space:nowrap;" onclick="deleteAccount(<%= md.getUserid()%>)">
+		<%
+		}
+		%>
+		
+	
+	
 	<br/> <br/><br/>
+	
 	</div>
 	
 	<%

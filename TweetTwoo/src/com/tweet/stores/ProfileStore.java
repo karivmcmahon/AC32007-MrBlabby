@@ -17,10 +17,19 @@ public class ProfileStore {
 	private byte[] photo;
 	private int userid;
 	private boolean following = false;
-	
+	private int permission;
 	public ProfileStore()
 	{
 		
+	}
+	public void setPermission(int p)
+	{
+		permission = p;
+	}
+	
+	public int getPermission()
+	{
+		return permission;
 	}
 	
 	public void setProfileid(int id)

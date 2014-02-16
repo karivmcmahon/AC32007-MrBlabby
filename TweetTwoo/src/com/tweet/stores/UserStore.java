@@ -9,7 +9,17 @@ public class UserStore {
 	private String email;
 	private boolean valid;
 	public boolean loggedIn = false;
+	public int permission;
 	
+	public void setPermission(int p)
+	{
+		permission = p;
+	}
+	
+	public int getPermission()
+	{
+		return permission;
+	}
 	
 	public void setUserid(int id)
 	{

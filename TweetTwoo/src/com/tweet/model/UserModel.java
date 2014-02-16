@@ -105,6 +105,7 @@ public class UserModel {
 				int id = rs.getInt("userid");
 				System.out.println("name  " + name);
 				us.setName(name);
+				us.setPermission(rs.getInt("permission"));
 				us.setUserid(id);
 				us.setValid(true);
 			}
@@ -143,6 +144,7 @@ public class UserModel {
 		String em = u.getEmail();
 		int userid = 0;
 		String n = u.getName();
+		int per = u.getPermission();
 		
 		//Result set
 		ResultSet rs = null;
@@ -164,7 +166,7 @@ public class UserModel {
 		
 		
 		//Set up querys
-		String sqlQuery = "INSERT users(username,password,email,name)  VALUES(?,?,?,?);";
+		String sqlQuery = "INSERT users(username,password,email,name,permission)  VALUES(?,?,?,?,?);";
 		String selectQuery = "SELECT userid FROM users WHERE username = ? AND password = ?;";
 		String sqlQuery2 = "INSERT profile(user_id) VALUES(?);";
 		
@@ -189,6 +191,7 @@ public class UserModel {
 					pmst.setString(2,pw);
 					pmst.setString(3,em);
 					pmst.setString(4, n);
+					pmst.setInt(5, per);
 				}catch(SQLException e2)
 				{
 					System.out.println("Could not prepare statement 2 - register()");
@@ -322,7 +325,7 @@ public class UserModel {
 		PreparedStatement pmst3 = null;
 		String sqlQuery = "SELECT * FROM users WHERE name LIKE concat('%', ?, '%');";
 		//Query to retrieve info for profile
-		String sqlQuery2 = "SELECT name,username,bio,location,country,photo,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery2 = "SELECT name,username,bio,location,country,photo,userid,permission FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
 		String sqlQuery3 = "SELECT following_id FROM followrelationships WHERE user_id = ? AND following_id = ?;";
 		try
 		{
@@ -384,6 +387,7 @@ public class UserModel {
 						ps.setLocation(rs2.getString("location"));
 						ps.setCountry(rs2.getString("country"));
 						ps.setUserid(rs2.getInt("userid"));
+						ps.setPermission(rs2.getInt("permission"));
 						pmst3 = Conns.prepareStatement(sqlQuery3);
 						pmst3.setInt(1, uid);
 						pmst3.setInt(2, id);
