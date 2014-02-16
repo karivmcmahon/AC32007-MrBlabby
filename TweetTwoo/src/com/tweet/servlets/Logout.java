@@ -40,6 +40,7 @@ public class Logout extends HttpServlet {
 		// TODO Auto-generated method stub
 		//Invalidate session
 		UserStore u = new UserStore();
+		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		u.setLoggedIn(false);
 		request.getSession().invalidate();
 		//Redirect user to sign up/log in page once they have logged out

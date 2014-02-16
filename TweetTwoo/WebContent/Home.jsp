@@ -23,6 +23,7 @@ function()
 $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Tweet #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+<!-- Script to delete users own tweet -->
 <script>
 function deleteTweet(tweetID)
 {

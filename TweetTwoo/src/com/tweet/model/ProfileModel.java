@@ -129,6 +129,30 @@ public class ProfileModel {
 
 			}
 			
+			try 
+			{
+				//Execute query for follower count
+				rs2 = pmst2.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays that query 3 could not be executed
+				System.out.println("Can not execute query 2 " + et);
+				return null;
+			}
+			if (rs2.wasNull()) 
+			{
+				//Displays that result set 3 was null
+				System.out.println("Result set 2 was null");
+			} 
+			while(rs2.next())
+			{
+				//Sets up follower count
+				ps.setFollowingCount(rs2.getInt("COUNT(following_id)"));
+				
+			}
 
 			
 			try 
@@ -225,7 +249,7 @@ public class ProfileModel {
 		//Retrieve current logged in user id
 		int id = u.getUserid();
 		//Query to retrieve info for profile
-		String sqlQuery = "SELECT name,username,bio,location,country,email,password, FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery = "SELECT name,username,bio,location,country,email,password,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
 		
 		try 
 		{
@@ -282,6 +306,7 @@ public class ProfileModel {
 				ps.setCountry(rs.getString("country"));
 				ps.setPassword(rs.getString("password"));
 				ps.setEmail(rs.getString("email"));
+				ps.setUserid(rs.getInt("userid"));
 
 			}
 		
@@ -389,6 +414,63 @@ public void updateProfile(UserStore u, ProfileStore ps) throws SQLException
 
 	
 	
+}
+
+/**
+ * Deletes tweet from database by id
+ * @param id
+ */
+public void deleteAccount(int id)
+{
+	Connection Conns = null;
+	try 
+	{
+		//Get connection
+		Conns = _ds.getConnection();
+	} 
+	catch (Exception et) 
+	{
+		//Display no connection available
+		System.out.println("No Connection in Profile Model deleteAccount()");
+		
+	}
+	
+	//Set up prepared statements
+	PreparedStatement pmst = null;
+	
+	String query = "DELETE FROM users WHERE userid = ?";
+	try
+	{
+		//Prepare statement with query
+		pmst = Conns.prepareStatement(query);
+		pmst.setInt(1,id);
+	} 
+	catch (Exception et)
+	{
+		System.out.println("Can't create prepare statement deleteAccount()");
+		
+	}
+	
+	try 
+	{
+		pmst.executeUpdate();
+	} catch (SQLException e1) 
+	{
+		System.out.println("Can't execute query deleteAccount()");
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	
+
+	try
+	{
+		//Close connection
+		Conns.close();
+	}
+	catch(Exception e)
+	{
+		System.out.println("Connection could not close");
+	}
 }
 }
 

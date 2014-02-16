@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.tweet.libs.StringSplitter;
 import com.tweet.libs.conn;
 import com.tweet.model.ProfileModel;
+import com.tweet.model.TweetModel;
 import com.tweet.stores.ProfileStore;
 import com.tweet.stores.UserStore;
 
@@ -120,6 +122,24 @@ public class EditProfile extends HttpServlet {
 		}
 		//Redirect to users profile after update
 		response.sendRedirect("/TweetTwoo/Profile");
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+		ProfileModel prof = new ProfileModel();
+		UserStore u = new UserStore();
+		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		System.out.println(request.getRequestURI());
+		StringSplitter SS = new StringSplitter();
+		String args[]  = SS.SplitRequestPath(request);
+		int id = Integer.parseInt(args[2]);
+		prof.setDatasource(_ds);
+		prof.deleteAccount(id);
+		u.setLoggedIn(false);
+		request.getSession().invalidate();
+		//Redirect user to sign up/log in page once they have logged out
+		response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		
 	}
 
 }

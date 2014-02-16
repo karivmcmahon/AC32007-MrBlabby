@@ -12,6 +12,21 @@
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script>
+function deleteAccount(userID)
+{
+    $.ajax({
+        url:"${pageContext.request.contextPath}/EditProfile/" + userID,
+        type:"DELETE",
+        cache:false
+    }).done(function() {
+        //Refresh page
+        document.location.reload(true);
+    });
+}
+
+</script>
 <title>Tweet-Twoo!</title>
 </head>
 <body class="general">
@@ -33,6 +48,7 @@
 		Country:  <input type="text" name="country" value="${Profile.getCountry() }"><br>
 		<input type="submit" value="Update" class="button">
 		</form>
+		<input type="button" value="Delete Account" name="delete" class="button" onclick="deleteAccount(${Profile.getUserid()})" />
 	</div>
 	
 	
