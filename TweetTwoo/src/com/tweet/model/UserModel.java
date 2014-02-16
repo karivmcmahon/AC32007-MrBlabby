@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
+import com.tweet.stores.ProfileStore;
+import com.tweet.stores.TweetStore;
 import com.tweet.stores.UserStore;
 
 public class UserModel {
@@ -289,5 +292,141 @@ public class UserModel {
 	
 	
 	}
-
+	
+	public LinkedList<ProfileStore> findUser(String name,UserStore u)
+	{
+		System.out.println("ok");
+		LinkedList<ProfileStore> psl = new LinkedList<ProfileStore>();
+		Connection Conns;
+		ProfileStore ps = null;
+		ResultSet rs;
+		ResultSet rs2;
+		ResultSet rs3;
+		int uid = u.getUserid();
+		try 
+		{
+			//Get connection
+			Conns = _ds.getConnection();
+		} 
+		catch (Exception et) 
+		{
+			//Display no connection available
+			System.out.println("No Connection in User  Model findUser()");
+			return null;
+		}
+		
+		System.out.println("o");
+		//Set up prepared statements
+		PreparedStatement pmst = null;
+		PreparedStatement pmst2 = null;
+		PreparedStatement pmst3 = null;
+		String sqlQuery = "SELECT * FROM users WHERE name LIKE concat('%', ?, '%');";
+		//Query to retrieve info for profile
+		String sqlQuery2 = "SELECT name,username,bio,location,country,photo,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery3 = "SELECT following_id FROM followrelationships WHERE user_id = ? AND following_id = ?;";
+		try
+		{
+			//Prepare statement with query
+			pmst = Conns.prepareStatement(sqlQuery);
+			pmst.setString(1, name);
+			System.out.println("okk");
+		} 
+		catch (Exception et)
+		{
+			System.out.println("Can't create prepare statement findUser()");
+			return null;
+		}
+		try 
+		{
+			//execute query
+			rs = pmst.executeQuery();
+			System.out.println("okkk");
+			
+			
+		} 
+		catch (Exception et) 
+		{
+			//Displays can not execute query
+			System.out.println("Can not execute query findUser() " + et);
+			return null;
+		}
+		
+		try {
+			if (rs.wasNull()) 
+			{
+				//Display result set is null
+				System.out.println("Result set was null findUser()");
+				System.out.println("ok");
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+			try {
+				while (rs.next()) 
+				{
+					System.out.println("ok3");
+					//Get and set info from result set
+					ps = new ProfileStore();
+					int id = rs.getInt("userid");
+					System.out.println(id);
+					pmst2 = Conns.prepareStatement(sqlQuery2);
+					pmst2.setInt(1, id);
+					rs2 = pmst2.executeQuery();
+					while(rs2.next())
+					{
+						System.out.println("ok2");
+						ps.setName(rs2.getString("name"));
+						ps.setUsername(rs2.getString("username"));
+						ps.setBio(rs2.getString("bio"));
+						ps.setLocation(rs2.getString("location"));
+						ps.setCountry(rs2.getString("country"));
+						ps.setUserid(rs2.getInt("userid"));
+						pmst3 = Conns.prepareStatement(sqlQuery3);
+						pmst3.setInt(1, uid);
+						pmst3.setInt(2, id);
+						rs3 = pmst3.executeQuery();
+						if(rs3.wasNull())
+						{ 
+							System.out.println("oknf");
+							ps.setFollowing(false);
+						}
+						while(rs3.next())
+						{
+							System.out.println("okf");
+							ps.setFollowing(true);
+						}
+						}
+					}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+				
+			
+			    //Add info into linked list
+				psl.add(ps);
+			
+				
+		
+		
+		try 
+		{
+			//Close connection
+			Conns.close();
+		} 
+		catch (Exception ex) 
+		{
+			//return null
+			return null;
+		}
+		//Return profile list
+		return psl;
+	} 
 }
+	
+
+

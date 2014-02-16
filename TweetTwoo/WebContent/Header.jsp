@@ -17,6 +17,7 @@
 			<li class="link"><a href="/TweetTwoo/Following">Following</a></li>
 			<li class="link"><a href="/TweetTwoo/Follower">Followers</a></li>
 			<li class="link"><a href="/TweetTwoo/Suggestions">Suggestions</a></li>
+			<li class="link"><a href="/TweetTwoo/Search.jsp">Search</a></li>
 			<li class="link"><a href="/TweetTwoo/Logout">Log Out</a></li>
 		</ul>
 	</div>

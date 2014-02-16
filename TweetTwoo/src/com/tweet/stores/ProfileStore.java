@@ -16,6 +16,7 @@ public class ProfileStore {
 	private String email;
 	private byte[] photo;
 	private int userid;
+	private boolean following = false;
 	
 	public ProfileStore()
 	{
@@ -27,6 +28,15 @@ public class ProfileStore {
 		int profileId = id;
 	}
 	
+	public void setFollowing(boolean f)
+	{
+		following = f;
+	}
+	
+	public boolean getFollowing()
+	{
+		return following;
+	}
 	public void setUserid(int id)
 	{
 		 userid = id;
