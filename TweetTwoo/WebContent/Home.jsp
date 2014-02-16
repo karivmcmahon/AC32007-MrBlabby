@@ -55,12 +55,27 @@ function deleteTweet(tweetID)
 	<br><span class="smallFont">Tell the world.<br>Post a Tweet : </span></p>
 	<form action="/TweetTwoo/Tweet"  method="post" class="regFont">
 	
-		<textarea  name="postTweet" rows="6" cols="45" class="textarea">
-		</textarea><br>
-		<input type="submit" value="Post It" class="button">
+		<textarea  name="postTweet" rows="6" cols="45" class="textarea" ></textarea><br>
+		<input type="submit" value="Post It" class="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span class="countdown" ></span>
 		
 	</form>
 	</div>
+	<!--  From: http://stackoverflow.com/questions/2136647/character-countdown-like-on-twitter -->
+	<script>
+            
+            function updateCounter() {
+                // 141 is the max message length
+                var remaining = 140 - $('.textarea').val().length;
+                $('.countdown').text(remaining + " Characters left");
+            }
+
+            $(document).ready(function() {
+                updateCounter();
+                $('.textarea').change(updateCounter);
+                $('.textarea').keyup(updateCounter);
+            });
+        </script>
 	
 	<div class="timeline">
 	<p class="bolderFont">Your Friends Tweet's : </p>
