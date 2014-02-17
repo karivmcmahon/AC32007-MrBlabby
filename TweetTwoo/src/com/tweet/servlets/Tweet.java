@@ -96,7 +96,8 @@ public class Tweet extends HttpServlet {
 			Tweet.setDatasource(_ds);
 			//Get tweets info
 		    psl = Tweet.getTweets(u); 
-			request.setAttribute("Tweets", psl); 
+			request.setAttribute("Tweets", psl);
+            
 			//forward tweets to Home.jsp
 			 rd = request.getRequestDispatcher("/Home.jsp"); 
 
@@ -122,14 +123,28 @@ public class Tweet extends HttpServlet {
 			{
 				String usernames = endOfUrl.toString();
 				System.out.println("u " + usernames);
-				 Tweet.setDatasource(_ds);
-				  u.setUsername(usernames);
-				  //Get tweets info
-				  psl = Tweet.getTweetsByUsername(u); 
-				  request.setAttribute("Tweets", psl); 
+				
+				  
+				  if (usernames.equals("json")) {
+					  
+					  Tweet.setDatasource(_ds);
+					  psl = Tweet.getTweets(u);
+		                request.setAttribute("data", psl);
+		                System.out.println("l");
+		                request.getRequestDispatcher("/Json").forward(request, response);
+		                return;
+		            }
+				  else
+				  {
+					  Tweet.setDatasource(_ds);
+					  u.setUsername(usernames);
+					  //Get tweets info
+					  psl = Tweet.getTweetsByUsername(u); 
+					  request.setAttribute("Tweets", psl);
 				  //forward tweets to Home.jsp
 			      rd = request.getRequestDispatcher("/Home.jsp"); 
 			      rd.forward(request, response); 
+				  }
 			}
 			}
 		}
@@ -206,6 +221,7 @@ public class Tweet extends HttpServlet {
 		
 	}
 
+	
 	
 	
 	
