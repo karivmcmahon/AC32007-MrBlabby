@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <!-- Ajax script to refresh following every minute, fade out is fast to show refresh occuring -->
 <script>
@@ -19,7 +19,7 @@ var auto_refresh = setInterval(
 function()
 {
  $.ajaxSetup({ cache: false });
-$('#loaddiv').fadeOut('fast').load('/TweetTwoo/Following #loaddiv').fadeIn("slow");
+$('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
 <title>Tweet-Twoo!</title>
@@ -52,10 +52,10 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Following #loaddiv').fadeIn("slow
 	ProfileStore md = (ProfileStore)iterator.next();
 
 	%>
-	<form action="/TweetTwoo/Following" method="post">
+	<form action="${pageContext.request.contextPath}/Following" method="post">
 	<div class="tweetDiv"> 
 	 <br/>
-	<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+	<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
 	<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
 	<span class="pinkFont">@<%=md.getUsername() %><br></span><input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
 	<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %><input type="submit" value="Unfollow" class="button" style="margin-left:70%"></span><br>

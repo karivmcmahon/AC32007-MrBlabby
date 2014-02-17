@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <!-- Ajax script to refresh followers every minute, fade out is fast to show refresh occuring -->
 <script>
@@ -19,7 +19,7 @@ var auto_refresh = setInterval(
 function()
 {
  $.ajaxSetup({ cache: false });
-$('#loaddiv').fadeOut('fast').load('/TweetTwoo/Follower #loaddiv').fadeIn("slow");
+$('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
 <title>Tweet-Twoo!</title>
@@ -55,7 +55,7 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Follower #loaddiv').fadeIn("slow"
 			%>
 			<div class="tweetDiv"> 
 			 <br/>
-			<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+			<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
 			<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
 			<span class="pinkFont">@<%=md.getUsername() %><br></span>
 			<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %></span><br>

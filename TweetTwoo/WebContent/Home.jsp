@@ -20,7 +20,7 @@ var auto_refresh = setInterval(
 function()
 {
  $.ajaxSetup({ cache: false });
-$('#loaddiv').fadeOut('fast').load('/TweetTwoo/Tweet #loaddiv').fadeIn("slow");
+$('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Tweet #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
 <!-- Script to delete users own tweet -->

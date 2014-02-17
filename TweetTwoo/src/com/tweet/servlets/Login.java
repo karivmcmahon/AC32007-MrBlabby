@@ -96,7 +96,7 @@ public class Login extends HttpServlet {
 		{
 			user.setLoggedIn(false);
 			//If user not valid then redirect to sign up page
-			response.sendRedirect("TweetTwoo/SignUp.jsp");
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 	}
 

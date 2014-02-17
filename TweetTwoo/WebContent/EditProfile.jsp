@@ -8,10 +8,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
 function deleteAccount(userID)
@@ -38,7 +38,7 @@ function deleteAccount(userID)
 		
 		
 		<p class="bolderFont">Edit your profile</p>
-		<form action="/TweetTwoo/EditProfile/" method="post" class="regFont">
+		<form action="${pageContext.request.contextPath}/EditProfile/" method="post" class="regFont">
 		Name: <input type="text" name="name" value="${Profile.getName()}"><br>
 		Username: <input type="text" name="username" value="${Profile.getUsername()}"><br>
 		Password: <input type="password" name="password" value="${Profile.getPassword()}"><br>

@@ -10,10 +10,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link href="css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
+<link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
-<link rel="shortcut icon" href="images/rotate100owl.png" type="image/png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script>
 function deleteTweet(tweetID)
@@ -61,7 +61,7 @@ function deleteTweet(tweetID)
 		%>
 		
 		<p class="bolderFont"><%=md.getName() %></p>
-		<img src="images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
+		<img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
 		<br>
 		<span class="userFont">@<%=md.getUsername() %></span>
 		<p class="boldishFont"><%=md.getBio() %><br> <%=md.getLocation() %>,<%=md.getCountry() %> </p>
@@ -71,7 +71,7 @@ function deleteTweet(tweetID)
 
 		%>
 		
-		<form action="/TweetTwoo/EditProfile" method="get" >
+		<form action="${pageContext.request.contextPath}/EditProfile" method="get" >
 			<input type="submit" value="Edit Profile" class="button" >
 		</form>
 	</div>
@@ -104,7 +104,7 @@ function deleteTweet(tweetID)
 	
 	<div class="tweetDiv"> 
 	 	<br/>
-		<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span><input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
+		<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span><input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
 		<br/> <br/><br/>
 	</div>
 	<%

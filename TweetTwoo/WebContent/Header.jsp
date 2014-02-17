@@ -12,13 +12,13 @@
 			<li class="link2"><a href="" class="tweetTwoo">Tweet-Twoo!</a></li>
 			<li class="owlLink"><img src="images/rotate100owl.png" width="30px" height="30px" /></li>
 			<!--  Owl logo found online and is free to use under public domain - site can be found here http://www.clipartlord.com/free-cute-cartoon-owls-perched-branch-clip-art/ -->
-			<li class="link"><a href="/TweetTwoo/Tweet" >Home</a></li>
-			<li class="link"><a href="/TweetTwoo/Profile">Profile</a></li>
-			<li class="link"><a href="/TweetTwoo/Following">Following</a></li>
-			<li class="link"><a href="/TweetTwoo/Follower">Followers</a></li>
-			<li class="link"><a href="/TweetTwoo/Suggestions">Suggestions</a></li>
-			<li class="link"><a href="/TweetTwoo/Search.jsp">Search</a></li>
-			<li class="link"><a href="/TweetTwoo/Logout">Log Out</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Tweet" >Home</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Profile">Profile</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Following">Following</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Follower">Followers</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Suggestions">Suggestions</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Search.jsp">Search</a></li>
+			<li class="link"><a href="${pageContext.request.contextPath}/Logout">Log Out</a></li>
 		</ul>
 	</div>
 </body>

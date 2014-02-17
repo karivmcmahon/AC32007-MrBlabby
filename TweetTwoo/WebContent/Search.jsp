@@ -39,7 +39,7 @@ function deleteAccount(userID)
 	
 	<div class="timeline">
 	<p class="bolderFont">Search for a user by name:</p>
-	<form action="/TweetTwoo/Search"  method="post" class="regFont">
+	<form action="${pageContext.request.contextPath}/Search"  method="post" class="regFont">
 		<input type="text" name="searchbox"/>
 		<input type="submit" value="Search" class="button">
 		
@@ -71,14 +71,14 @@ function deleteAccount(userID)
 	
 	<div class="tweetDiv"> 
 	 <br/>
-	<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+	<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
 	<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
 	<span class="pinkFont">@<%=md.getUsername() %><br></span>
 	<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %></span><br>
 	<span class="tweetFont" style="margin-left:2%;float:left;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
 	<%if(md.getFollowing() == true)
 		{
-	%>	<form action="/TweetTwoo/Following" method="post">
+	%>	<form action="${pageContext.request.contextPath}/Following" method="post">
 		<input type="submit" value="Unfollow" class="button" style="margin-left:80%;white-space:nowrap;">
 		<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
 		</form>
@@ -87,7 +87,7 @@ function deleteAccount(userID)
 	else
 	{
 		%>
-		<form action="/TweetTwoo/Follower" method="post">
+		<form action="${pageContext.request.contextPath}/Follower" method="post">
 		<input type="submit" value="Follow" class="button" style="margin-left:80%;white-space:nowrap;">
 		<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
 		</form>
