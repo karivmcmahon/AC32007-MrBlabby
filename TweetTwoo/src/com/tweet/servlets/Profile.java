@@ -70,17 +70,31 @@ public class Profile extends HttpServlet {
 		{
 		if(u.getLoggedIn() == true)
 		{
+		int lastSlash = request.getRequestURI().lastIndexOf('/');
+		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+	    String urlEnd = endOfUrl.toString();
 		//Set up data sources
 		tweetModel.setDatasource(_ds);
 		profModel.setDatasource(_ds);
 		//Retrieve a specific profile and tweets
 		LinkedList<TweetStore> tsl = tweetModel.getOwnTweets(u);
 		LinkedList<ProfileStore> psl = profModel.getProfile(u);
+		if(urlEnd.equals("json"))
+		{
+			request.setAttribute("data", tsl);
+            System.out.println("l");
+            request.getRequestDispatcher("/Json").forward(request, response);
+            return;
+		}
+		else
+		{
 		request.setAttribute("Tweets", tsl);
 		request.setAttribute("Profiles", psl); 
+		
 		//Then forward request to Profile.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp");  
 		rd.forward(request, response);
+		}
 		}
 		else
 		{

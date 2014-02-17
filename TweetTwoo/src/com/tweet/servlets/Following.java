@@ -72,14 +72,27 @@ public class Following extends HttpServlet {
 		 {
 		Iterator<ProfileStore> iterator;
 		FollowingModel fm = new FollowingModel();
+		int lastSlash = request.getRequestURI().lastIndexOf('/');
+		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+	    String urlEnd = endOfUrl.toString();
 		fm.setDatasource(_ds);
 		//Get a list of who the user is following
 		LinkedList<ProfileStore> lps = fm.getFollowing(u);
+		if(urlEnd.equals("json"))
+		{
+			request.setAttribute("data", lps);
+            System.out.println("l");
+            request.getRequestDispatcher("/Json").forward(request, response);
+            return;
+		}
+		else
+		{
 		request.setAttribute("Following", lps); 
 		//forward this to following.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Following.jsp"); 
 
 		rd.forward(request, response);
+		}
 		}
 		else
 		{

@@ -72,15 +72,27 @@ public class Follower extends HttpServlet {
 				{
 					Iterator<ProfileStore> iterator;
 					FollowingModel fm = new FollowingModel();
-					
+					int lastSlash = request.getRequestURI().lastIndexOf('/');
+					String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+				    String urlEnd = endOfUrl.toString();
 					fm.setDatasource(_ds);
 					//Get users followers by passing current logged in users info
 					LinkedList<ProfileStore> lps = fm.getFollowers(u);
+					if(urlEnd.equals("json"))
+					{
+						request.setAttribute("data", lps);
+			            System.out.println("l");
+			            request.getRequestDispatcher("/Json").forward(request, response);
+			            return;
+					}
+					else
+					{
 					request.setAttribute("Followers", lps); 
 					//forward followers to follower.jsp
 					RequestDispatcher rd = request.getRequestDispatcher("/Follower.jsp"); 
 
 					rd.forward(request, response);
+					}
 				}
 				else
 				{

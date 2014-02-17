@@ -70,14 +70,27 @@ public class Suggestions extends HttpServlet {
 		{
 		Iterator<ProfileStore> iterator;
 		FollowingModel fm = new FollowingModel();
+		int lastSlash = request.getRequestURI().lastIndexOf('/');
+		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+	    String urlEnd = endOfUrl.toString();
 		fm.setDatasource(_ds);
 		//Get a list of suggestion
 		LinkedList<ProfileStore> lps = fm.getSuggestions(u);
+		if(urlEnd.equals("json"))
+		{
+			request.setAttribute("data", lps);
+            System.out.println("l");
+            request.getRequestDispatcher("/Json").forward(request, response);
+            return;
+		}
+		else
+		{
 		request.setAttribute("Suggestions", lps); 
 		//forward tweets to Home.jsp
 		RequestDispatcher rd = request.getRequestDispatcher("/Suggestions.jsp"); 
 
 		rd.forward(request, response);
+		}
 		}
 		else
 		{
