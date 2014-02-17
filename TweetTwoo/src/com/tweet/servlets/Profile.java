@@ -62,42 +62,50 @@ public class Profile extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get information of user current logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		
 		if(u == null)
 		{
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
-		if(u.getLoggedIn() == true)
-		{
-		int lastSlash = request.getRequestURI().lastIndexOf('/');
-		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-	    String urlEnd = endOfUrl.toString();
-		//Set up data sources
-		tweetModel.setDatasource(_ds);
-		profModel.setDatasource(_ds);
-		//Retrieve a specific profile and tweets
-		LinkedList<TweetStore> tsl = tweetModel.getOwnTweets(u);
-		LinkedList<ProfileStore> psl = profModel.getProfile(u);
-		if(urlEnd.equals("json"))
-		{
-			request.setAttribute("data", tsl);
-            System.out.println("l");
-            request.getRequestDispatcher("/Json").forward(request, response);
-            return;
-		}
+			if(u.getLoggedIn() == true)
+			{
+				//Get end of url
+				int lastSlash = request.getRequestURI().lastIndexOf('/');
+				String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+			    String urlEnd = endOfUrl.toString();
+				
+			    //Set up data sources
+				tweetModel.setDatasource(_ds);
+				profModel.setDatasource(_ds);
+				
+				//Retrieve a specific profile and tweets
+				LinkedList<TweetStore> tsl = tweetModel.getOwnTweets(u);
+				LinkedList<ProfileStore> psl = profModel.getProfile(u);
+				
+				//If json requested then get json of users own tweets
+				if(urlEnd.equals("json"))
+				{
+					request.setAttribute("data", tsl);
+		            System.out.println("l");
+		            request.getRequestDispatcher("/Json").forward(request, response);
+		            return;
+				}
+				else
+				{
+					//Get profile and users own tweets info
+					request.setAttribute("Tweets", tsl);
+					request.setAttribute("Profiles", psl); 
+					
+					//Then forward request to Profile.jsp
+					RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp");  
+					rd.forward(request, response);
+				}
+			}
 		else
 		{
-		request.setAttribute("Tweets", tsl);
-		request.setAttribute("Profiles", psl); 
-		
-		//Then forward request to Profile.jsp
-		RequestDispatcher rd = request.getRequestDispatcher("/Profile.jsp");  
-		rd.forward(request, response);
-		}
-		}
-		else
-		{
+			//Redirect to sign up if not logged in
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		}

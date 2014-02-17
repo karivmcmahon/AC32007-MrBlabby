@@ -63,7 +63,8 @@ public class UserModel {
 			return null;
 		}
 		
-		try {
+		try 
+		{
 			//Prepare and set up query
 			preps = Conn.prepareStatement(query);
 			preps.setString(1, username);

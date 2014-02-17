@@ -60,37 +60,43 @@ public class Suggestions extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		
 		if(u == null)
 		{
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
-		if(u.getLoggedIn() == true)
-		{
-		Iterator<ProfileStore> iterator;
-		FollowingModel fm = new FollowingModel();
-		int lastSlash = request.getRequestURI().lastIndexOf('/');
-		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-	    String urlEnd = endOfUrl.toString();
-		fm.setDatasource(_ds);
-		//Get a list of suggestion
-		LinkedList<ProfileStore> lps = fm.getSuggestions(u);
-		if(urlEnd.equals("json"))
-		{
-			request.setAttribute("data", lps);
-            System.out.println("l");
-            request.getRequestDispatcher("/Json").forward(request, response);
-            return;
-		}
-		else
-		{
-		request.setAttribute("Suggestions", lps); 
-		//forward tweets to Home.jsp
-		RequestDispatcher rd = request.getRequestDispatcher("/Suggestions.jsp"); 
-
-		rd.forward(request, response);
-		}
+			if(u.getLoggedIn() == true)
+			{
+			
+				FollowingModel fm = new FollowingModel();
+				
+				//Get end of url
+				int lastSlash = request.getRequestURI().lastIndexOf('/');
+				String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+			    String urlEnd = endOfUrl.toString();
+				fm.setDatasource(_ds);
+				
+				//Get a list of suggestion
+				LinkedList<ProfileStore> lps = fm.getSuggestions(u);
+				
+				//If json requested send list of suggestions as json object
+				if(urlEnd.equals("json"))
+				{
+					request.setAttribute("data", lps);
+		            System.out.println("l");
+		            request.getRequestDispatcher("/Json").forward(request, response);
+		            return;
+				}
+				else
+				{
+					request.setAttribute("Suggestions", lps); 
+					//forward suggestions to Suggestions.jsp
+					RequestDispatcher rd = request.getRequestDispatcher("/Suggestions.jsp"); 
+			
+					rd.forward(request, response);
+				}
 		}
 		else
 		{

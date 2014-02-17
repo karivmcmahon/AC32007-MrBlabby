@@ -63,14 +63,17 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int  id = 0;
+		
 		UserStore u = new UserStore();
 		UserModel um = new UserModel();
+		
 		//Get information from textboxs in register section of SignUp.jsp
 		u.setUsername(request.getParameter("newUsername"));
 		u.setPassword(request.getParameter("newPassword"));
 		u.setEmail(request.getParameter("newEmail"));
 		u.setName(request.getParameter("name"));
 		u.setPermission(1);
+		
 		try
 		{
 			//Set up data source
@@ -81,6 +84,8 @@ public class Register extends HttpServlet {
 		}
 		catch(Exception e)
 		{
+			System.out.println("Could not register user");
+			response.sendRedirect("/SignUp.jsp");
 		}
 		
 		if(id != 0)

@@ -64,27 +64,28 @@ public class EditProfile extends HttpServlet {
 		ProfileStore ps = new ProfileStore();
 		//Get information of user who is currently logged in
 		user = (UserStore)  request.getSession().getAttribute("currentSeshUser");
+		
 		if(user == null)
 		{
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
-		if(user.getLoggedIn() == true)
-		{
-		//Set up data source and get information for editing profile
-		prof.setDatasource(_ds);
-		ps = prof.getProfileEdit(user);
-		//Then set profile store to request and forward it to EditProfile.jsp
-		request.setAttribute("Profile", ps); 
-		RequestDispatcher rd = request.getRequestDispatcher("/EditProfile.jsp"); 
-
-		rd.forward(request, response);
-		}
-		else
-		{
-			response.sendRedirect("/TweetTwoo/SignUp.jsp");
-		}
+			if(user.getLoggedIn() == true)
+			{
+				//Set up data source and get information for editing profile
+				prof.setDatasource(_ds);
+				ps = prof.getProfileEdit(user);
+				//Then set profile store to request and forward it to EditProfile.jsp
+				request.setAttribute("Profile", ps); 
+				RequestDispatcher rd = request.getRequestDispatcher("/EditProfile.jsp"); 
+		
+				rd.forward(request, response);
+			}
+			else
+			{
+				response.sendRedirect("/TweetTwoo/SignUp.jsp");
+			}
 		}
 		
 	}
@@ -99,8 +100,10 @@ public class EditProfile extends HttpServlet {
 		ProfileStore ps = new ProfileStore();
 		//Get user info who is currently logged
 		user = (UserStore)  request.getSession().getAttribute("currentSeshUser");
+		
 		//Set up data source
 		prof.setDatasource(_ds);
+		
 		//Get information from textboxes in EditProfile.jsp
 		ps.setName(request.getParameter("name"));
 		ps.setUsername(request.getParameter("username"));
@@ -120,25 +123,40 @@ public class EditProfile extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		//Redirect to users profile after update
 		response.sendRedirect("/TweetTwoo/Profile");
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
+		
 		ProfileModel prof = new ProfileModel();
 		UserStore u = new UserStore();
+		//Gets current user sesh
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		System.out.println(request.getRequestURI());
+		
+		//Gets id sent in url
 		StringSplitter SS = new StringSplitter();
 		String args[]  = SS.SplitRequestPath(request);
 		int id = Integer.parseInt(args[2]);
+		
 		prof.setDatasource(_ds);
-		prof.deleteAccount(id);
-		u.setLoggedIn(false);
-		request.getSession().invalidate();
-		//Redirect user to sign up/log in page once they have logged out
-		response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		try
+		{
+			//Attempt to delete account then invalidate account
+			prof.deleteAccount(id);
+			u.setLoggedIn(false);
+			request.getSession().invalidate();
+			//Redirect user to sign up/log in page once they have logged out
+			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Couldn't delete current user's account");
+		}
+		
+		
 		
 	}
 

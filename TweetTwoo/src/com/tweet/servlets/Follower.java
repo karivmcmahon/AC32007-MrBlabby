@@ -64,40 +64,50 @@ public class Follower extends HttpServlet {
 				u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 				if( u == null)
 				{
+					//If no current user send to sign up page
 					response.sendRedirect("/TweetTwoo/SignUp.jsp");
 				}
 				else
 				{
-				if(u.getLoggedIn() == true)
-				{
-					Iterator<ProfileStore> iterator;
-					FollowingModel fm = new FollowingModel();
-					int lastSlash = request.getRequestURI().lastIndexOf('/');
-					String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-				    String urlEnd = endOfUrl.toString();
-					fm.setDatasource(_ds);
-					//Get users followers by passing current logged in users info
-					LinkedList<ProfileStore> lps = fm.getFollowers(u);
-					if(urlEnd.equals("json"))
+					//check logged in
+					if(u.getLoggedIn() == true)
 					{
-						request.setAttribute("data", lps);
-			            System.out.println("l");
-			            request.getRequestDispatcher("/Json").forward(request, response);
-			            return;
+						
+						FollowingModel fm = new FollowingModel();
+						//Gets end of url
+						int lastSlash = request.getRequestURI().lastIndexOf('/');
+						String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+					    String urlEnd = endOfUrl.toString();
+					    
+					    //Sets up data source
+						fm.setDatasource(_ds);
+						
+						
+						//Get users followers by passing current logged in users info
+						LinkedList<ProfileStore> lps = fm.getFollowers(u);
+					
+						
+						if(urlEnd.equals("json"))
+						{
+							//Sends users own tweets to JSON to get as a JSON object
+							request.setAttribute("data", lps);
+				            System.out.println("l");
+				            request.getRequestDispatcher("/Json").forward(request, response);
+				            return;
+						}
+						else
+						{
+							request.setAttribute("Followers", lps); 
+							//forward followers to follower.jsp
+							RequestDispatcher rd = request.getRequestDispatcher("/Follower.jsp"); 
+							rd.forward(request, response);
+						}
 					}
 					else
 					{
-					request.setAttribute("Followers", lps); 
-					//forward followers to follower.jsp
-					RequestDispatcher rd = request.getRequestDispatcher("/Follower.jsp"); 
-
-					rd.forward(request, response);
+						//If  not logged in then redirect to sign up
+						response.sendRedirect("/TweetTwoo/SignUp.jsp");
 					}
-				}
-				else
-				{
-					response.sendRedirect("/TweetTwoo/SignUp.jsp");
-				}
 			}
 				
 	}
@@ -112,22 +122,27 @@ public class Follower extends HttpServlet {
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		if(u == null)
 		{
+			//If no current user redirect to sign up page
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
-		}
-		if(u.getLoggedIn() == true)
-		{
-		//Gets user id  from the the person user selected to follow
-		int id=Integer.parseInt(request.getParameter("userid"));
-		FollowingModel fm = new FollowingModel();
-		fm.setDatasource(_ds);
-		//follow user
-		fm.followUser(id,u);
-		//redirect back to suggestions
-		response.sendRedirect("/TweetTwoo/Following");
 		}
 		else
 		{
-			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+			//check user logged in
+			if(u.getLoggedIn() == true)
+			{
+				//Gets user id  from the the person user selected to follow
+				int id=Integer.parseInt(request.getParameter("userid"));
+				FollowingModel fm = new FollowingModel();
+				fm.setDatasource(_ds);
+				//follow user
+				fm.followUser(id,u);
+				//redirect back to suggestions
+				response.sendRedirect("/TweetTwoo/Following");
+			}
+			else
+			{
+				response.sendRedirect("/TweetTwoo/SignUp.jsp");
+			}
 		}
 		
 		

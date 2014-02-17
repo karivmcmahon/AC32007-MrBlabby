@@ -372,7 +372,7 @@ public class TweetModel {
 		catch (Exception et)
 		{
 			//Display connection could not be set up
-			System.out.println("No Connection in Tweets Model getTweetsByID()");
+			System.out.println("No Connection in Tweets Model getTweetsByUsername()");
 			return null;
 		}
 		//Set up prepared statement
@@ -554,6 +554,7 @@ public class TweetModel {
 		
 		try 
 		{
+			//Execute delete
 			pmst.executeUpdate();
 		} catch (SQLException e1) 
 		{

@@ -49,8 +49,7 @@ public class Tweet extends HttpServlet {
     public Tweet() {
         super();
         // TODO Auto-generated constructor stub
-        CommandsMap.put("id",1);
-        CommandsMap.put("name",2);
+        
      
     	
     	
@@ -72,13 +71,11 @@ public class Tweet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserStore u = new UserStore();
-		Iterator<TweetStore> iterator;
 		TweetModel Tweet = new TweetModel();//Create a new instance of the model
 		TweetStore t = new TweetStore();
 		LinkedList<TweetStore> psl;
 		RequestDispatcher rd;
-		String username = "";
-		int x = 0;
+		
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		if(u == null)
@@ -90,66 +87,72 @@ public class Tweet extends HttpServlet {
 		
 		if(u.getLoggedIn() == true)
 		{
-		if(request.getRequestURI().equals(request.getContextPath() + "/Tweet"))
-		{
-			//Set up data source
-			Tweet.setDatasource(_ds);
-			//Get tweets info
-		    psl = Tweet.getTweets(u); 
-			request.setAttribute("Tweets", psl);
-            
-			//forward tweets to Home.jsp
-			 rd = request.getRequestDispatcher("/Home.jsp"); 
-
-			rd.forward(request, response);
-		}
-		else
-		{
-			int lastSlash = request.getRequestURI().lastIndexOf('/');
-			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-			try
+			if(request.getRequestURI().equals(request.getContextPath() + "/Tweet"))
 			{
-				int id = Integer.valueOf(endOfUrl);
+				//Set up data source
 				Tweet.setDatasource(_ds);
-				t.setTweetid(id);
 				//Get tweets info
-				psl = Tweet.getTweetsByID(t); 
-				request.setAttribute("Tweets", psl); 
+			    psl = Tweet.getTweets(u); 
+				request.setAttribute("Tweets", psl);
+	            
 				//forward tweets to Home.jsp
-				rd = request.getRequestDispatcher("/Home.jsp"); 
+				 rd = request.getRequestDispatcher("/Home.jsp"); 
+	
 				rd.forward(request, response);
 			}
-			catch(Exception e)
+			else
 			{
-				String usernames = endOfUrl.toString();
-				System.out.println("u " + usernames);
-				
-				  
-				  if (usernames.equals("json")) {
-					  
-					  Tweet.setDatasource(_ds);
-					  psl = Tweet.getTweets(u);
-		                request.setAttribute("data", psl);
-		                System.out.println("l");
-		                request.getRequestDispatcher("/Json").forward(request, response);
-		                return;
-		            }
-				  else
-				  {
-					  Tweet.setDatasource(_ds);
-					  u.setUsername(usernames);
-					  //Get tweets info
-					  psl = Tweet.getTweetsByUsername(u); 
-					  request.setAttribute("Tweets", psl);
-				  //forward tweets to Home.jsp
-			      rd = request.getRequestDispatcher("/Home.jsp"); 
-			      rd.forward(request, response); 
-				  }
-			}
+				//Get end of url
+				int lastSlash = request.getRequestURI().lastIndexOf('/');
+				String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+				try
+				{
+					//if end of url is an int then it will be an id of tweet
+					int id = Integer.valueOf(endOfUrl);
+					Tweet.setDatasource(_ds);
+					t.setTweetid(id);
+					//Get tweets info by it's id
+					psl = Tweet.getTweetsByID(t); 
+					request.setAttribute("Tweets", psl); 
+					//forward tweets to Home.jsp
+					rd = request.getRequestDispatcher("/Home.jsp"); 
+					rd.forward(request, response);
+				}
+				catch(Exception e)
+				{
+						//if end of url a string then it will be a username
+						String usernames = endOfUrl.toString();
+						System.out.println("u " + usernames);
+					
+					  //if string json then return all tweets as json object
+					  if (usernames.equals("json")) 
+					  {
+						  
+							Tweet.setDatasource(_ds);
+							psl = Tweet.getTweets(u);
+			                request.setAttribute("data", psl);
+			                System.out.println("l");
+			                request.getRequestDispatcher("/Json").forward(request, response);
+			                return;
+			            }
+					  else
+					  {
+						  //Get tweets by username in url
+						  Tweet.setDatasource(_ds);
+						  u.setUsername(usernames);
+						  //Get tweets info
+						  psl = Tweet.getTweetsByUsername(u); 
+						  request.setAttribute("Tweets", psl);
+						  //forward tweets to Home.jsp
+					      rd = request.getRequestDispatcher("/Home.jsp"); 
+					      rd.forward(request, response); 
+					  }
+				}
 			}
 		}
 		else
 		{
+		  //Redirect to sign up
 		  response.sendRedirect("/TweetTwoo/Signup.jsp");
 		}
 	}
@@ -168,6 +171,7 @@ public class Tweet extends HttpServlet {
 		UserStore u = new UserStore();
 		TweetStore t = new TweetStore();
 		TweetModel tm = new TweetModel();
+		
 		//Get current user logged info
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		if(u == null)
@@ -178,26 +182,26 @@ public class Tweet extends HttpServlet {
 		{
 			if(u.getLoggedIn() == true)
 			{
-		//Get information in textbox from Home.jsp
-		t.setTweet(request.getParameter("postTweet"));
-		//Get timestamp  when it was posted
-		java.util.Date date= new java.util.Date();
-		t.setTime(new Timestamp(date.getTime()));
-		//Set up data source
-		tm.setDatasource(_ds);
-		try 
-		{
-			//Attempts to create tweet
-			tm.createTweet(u,t);
-		} 
-		catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Creating tweet could not be execueted ");
-			e.printStackTrace();
-		}
-		
-		//Redirect to home timeline once tweet created 
-		response.sendRedirect("/TweetTwoo/Tweet");
+				//Get information in textbox from Home.jsp
+				t.setTweet(request.getParameter("postTweet"));
+				//Get timestamp  when it was posted
+				java.util.Date date= new java.util.Date();
+				t.setTime(new Timestamp(date.getTime()));
+				//Set up data source
+				tm.setDatasource(_ds);
+				try 
+				{
+					//Attempts to create tweet
+					tm.createTweet(u,t);
+				} 
+				catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Creating tweet could not be execueted ");
+					e.printStackTrace();
+				}
+				
+				//Redirect to home timeline once tweet created 
+				response.sendRedirect("/TweetTwoo/Tweet");
 		}
 		else
 		{
@@ -213,9 +217,14 @@ public class Tweet extends HttpServlet {
 	{
 		TweetModel Tweet = new TweetModel();
 		System.out.println(request.getRequestURI());
+		
+		//Split string
 		StringSplitter SS = new StringSplitter();
 		String args[]  = SS.SplitRequestPath(request);
+		//get id
 		int id = Integer.parseInt(args[2]);
+		
+		//Delete tweet based on id
 		Tweet.setDatasource(_ds);
 		Tweet.deleteTweet(id);
 		

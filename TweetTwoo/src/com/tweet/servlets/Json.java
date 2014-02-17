@@ -40,17 +40,24 @@ public class Json extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 Gson gson = new Gson();
+		 	
+			//Creates new gson
+			Gson gson = new Gson();
 
+			//Requests data from attribute
 	        Object data = request.getAttribute("data");
+	        //Converts gson to json which is stored in a string
 	        String json = gson.toJson(data);
 	        
-	        try {
-	        	System.out.println("uolo");
+	        try 
+	        {
+	        	//Json is then printed
 	            PrintWriter out = response.getWriter();
 	            out.print(json);
-	        } catch (IOException ex) {
-	            
+	        } 
+	        catch (IOException ex) 
+	        {
+	            System.out.println("Json could not be printed");
 	        }
 	}
 

@@ -67,9 +67,14 @@ public class Search extends HttpServlet {
 		UserModel model = new UserModel();
 		UserStore u = new UserStore();
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		
+		//Set up data source
 		model.setDatasource(_ds);
+		//Get name from textbox
 		String name = request.getParameter("searchbox");
+		//Store all found users in a linked list
 		LinkedList<ProfileStore> psl = model.findUser(name,u);
+		//Then send linked list to Search.jsp
 		request.setAttribute("Profiles", psl);
 		RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");  
 		rd.forward(request, response);

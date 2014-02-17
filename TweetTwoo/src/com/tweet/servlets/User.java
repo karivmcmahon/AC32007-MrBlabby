@@ -68,10 +68,14 @@ public class User extends HttpServlet {
 		ProfileModel prof = new ProfileModel();
 		UserStore u = new UserStore();
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		
+		//Get id to delete user from url 
 		System.out.println(request.getRequestURI());
 		StringSplitter SS = new StringSplitter();
 		String args[]  = SS.SplitRequestPath(request);
 		int id = Integer.parseInt(args[2]);
+		
+		//Attempt to delete user
 		prof.setDatasource(_ds);
 		prof.deleteAccount(id);
 		//Redirect user to sign up/log in page once they have logged out

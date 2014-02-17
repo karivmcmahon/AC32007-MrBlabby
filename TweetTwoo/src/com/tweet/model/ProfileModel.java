@@ -47,8 +47,7 @@ public class ProfileModel {
 		ResultSet rs2 = null;
 		ResultSet rs3 = null;
 		ResultSet rs4 = null;
-		//Store image data for profile
-		byte[] imgData = null ;
+		
 		//Store the user thats current logged in - users id
 		int id = u.getUserid();
 		

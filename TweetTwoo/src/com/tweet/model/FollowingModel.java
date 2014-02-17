@@ -111,6 +111,7 @@ public class FollowingModel {
 				pmst2.setInt(1,ids);
 				pmst2.setInt(2, ids);
 			    rs2 = pmst2.executeQuery();
+			   
 			    while(rs2.next())
 			    {
 			    	ps.setName(rs2.getString("name"));
@@ -227,7 +228,8 @@ public class FollowingModel {
 				ps = new ProfileStore();
 				int ids = rs.getInt("user_id");
 				System.out.println("ID s" + ids);
-			    pmst2 = Conns.prepareStatement(sqlQuery2);
+			    
+				pmst2 = Conns.prepareStatement(sqlQuery2);
 				pmst2.setInt(1,ids);
 				pmst2.setInt(2, ids);
 			    rs2 = pmst2.executeQuery();
@@ -429,6 +431,7 @@ public class FollowingModel {
 		
 		try 
 		{
+			//Execute insert
 			pmst.executeUpdate();
 		} 
 		catch (SQLException e1) 
@@ -489,6 +492,7 @@ public class FollowingModel {
 		
 		try 
 		{
+			//Execute delete
 			pmst.executeUpdate();
 		} 
 		catch (SQLException e1) 

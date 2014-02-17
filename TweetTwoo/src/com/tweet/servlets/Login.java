@@ -75,7 +75,9 @@ public class Login extends HttpServlet {
 		{
 			//Attempt to log user in
 			user = uModel.login(user);
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			// TODO Auto-generated catch block
 			System.out.println("failed to log user in");
 			e.printStackTrace();

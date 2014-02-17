@@ -70,29 +70,34 @@ public class Following extends HttpServlet {
 		{
 		 if(u.getLoggedIn() == true)
 		 {
-		Iterator<ProfileStore> iterator;
-		FollowingModel fm = new FollowingModel();
-		int lastSlash = request.getRequestURI().lastIndexOf('/');
-		String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
-	    String urlEnd = endOfUrl.toString();
-		fm.setDatasource(_ds);
-		//Get a list of who the user is following
-		LinkedList<ProfileStore> lps = fm.getFollowing(u);
-		if(urlEnd.equals("json"))
-		{
-			request.setAttribute("data", lps);
-            System.out.println("l");
-            request.getRequestDispatcher("/Json").forward(request, response);
-            return;
-		}
-		else
-		{
-		request.setAttribute("Following", lps); 
-		//forward this to following.jsp
-		RequestDispatcher rd = request.getRequestDispatcher("/Following.jsp"); 
-
-		rd.forward(request, response);
-		}
+		
+			FollowingModel fm = new FollowingModel();
+			
+			//Get end of url
+			int lastSlash = request.getRequestURI().lastIndexOf('/');
+			String endOfUrl = request.getRequestURI().substring(lastSlash + 1);
+		    String urlEnd = endOfUrl.toString();
+			//Set up data source
+		    fm.setDatasource(_ds);
+			//Get a list of who the user is following
+			LinkedList<ProfileStore> lps = fm.getFollowing(u);
+			//if json get json object of who user is following
+			if(urlEnd.equals("json"))
+			{
+				request.setAttribute("data", lps);
+	            System.out.println("l");
+	            request.getRequestDispatcher("/Json").forward(request, response);
+	            return;
+			}
+			else
+			{
+				//Get list of who user is following
+				request.setAttribute("Following", lps); 
+				//forward this to following.jsp
+				RequestDispatcher rd = request.getRequestDispatcher("/Following.jsp"); 
+		
+				rd.forward(request, response);
+			}
 		}
 		else
 		{
@@ -112,6 +117,7 @@ public class Following extends HttpServlet {
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		
+		//Get id from hidden textbox
 		int id=Integer.parseInt(request.getParameter("userid"));
 
 		System.out.println("User " + id);
