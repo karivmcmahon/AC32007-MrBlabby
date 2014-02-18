@@ -70,7 +70,7 @@ public class ProfileModel {
 		PreparedStatement pmst4 = null;
 		
 		//Query to retrieve info for profile
-		String sqlQuery = "SELECT name,username,bio,location,country,photo FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery = "SELECT name,username,bio,location,country FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
 		//Query to retrieve number of people the user is following
 		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
 		//Query to retrieve number of followers the user has

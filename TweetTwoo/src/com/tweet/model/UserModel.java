@@ -326,7 +326,7 @@ public class UserModel {
 		PreparedStatement pmst3 = null;
 		String sqlQuery = "SELECT * FROM users WHERE name LIKE concat('%', ?, '%');";
 		//Query to retrieve info for profile
-		String sqlQuery2 = "SELECT name,username,bio,location,country,photo,userid,permission FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery2 = "SELECT name,username,bio,location,country,userid,permission FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
 		String sqlQuery3 = "SELECT following_id FROM followrelationships WHERE user_id = ? AND following_id = ?;";
 		try
 		{
