@@ -87,6 +87,7 @@ public class Login extends HttpServlet {
 		if(user.getValid())
 		{
 			user.setLoggedIn(true);
+			user.setError("");
 			//Set session to true and set it to an attribute
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSeshUser", user);
@@ -97,8 +98,12 @@ public class Login extends HttpServlet {
 		else
 		{
 			user.setLoggedIn(false);
-			//If user not valid then redirect to sign up page
-			response.sendRedirect("/TweetTwoo/SignUp.jsp");
+			user.setError("Could not log user in");
+			request.setAttribute("Users", user);
+			 //forward tweets to Home.jsp
+		     RequestDispatcher rd = request.getRequestDispatcher("/SignUp.jsp"); 
+		      rd.forward(request, response); 
+			
 		}
 	}
 

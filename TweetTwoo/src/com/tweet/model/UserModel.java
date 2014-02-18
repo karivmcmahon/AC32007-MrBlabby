@@ -319,7 +319,7 @@ public class UserModel {
 			return null;
 		}
 		
-		System.out.println("o");
+		
 		//Set up prepared statements
 		PreparedStatement pmst = null;
 		PreparedStatement pmst2 = null;
@@ -333,7 +333,7 @@ public class UserModel {
 			//Prepare statement with query
 			pmst = Conns.prepareStatement(sqlQuery);
 			pmst.setString(1, name);
-			System.out.println("okk");
+			
 		} 
 		catch (Exception et)
 		{
@@ -344,7 +344,7 @@ public class UserModel {
 		{
 			//execute query
 			rs = pmst.executeQuery();
-			System.out.println("okkk");
+
 			
 			
 		} 
@@ -356,21 +356,26 @@ public class UserModel {
 		}
 		
 		try {
-			if (rs.wasNull()) 
+			if(rs.wasNull())
 			{
-				//Display result set is null
-				System.out.println("Result set was null findUser()");
-				System.out.println("ok");
-				
+				System.out.println("Null");
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+			e1.printStackTrace();
+		}
+		 
 		
 			try {
+				
 				while (rs.next()) 
 				{
+				
+					int rows = rs.getInt(1);
+					if(rows == 0)
+					{
+						return null;
+					}
 					System.out.println("ok3");
 					//Get and set info from result set
 					ps = new ProfileStore();
@@ -381,7 +386,7 @@ public class UserModel {
 					rs2 = pmst2.executeQuery();
 					while(rs2.next())
 					{
-						System.out.println("ok2");
+						
 						ps.setName(rs2.getString("name"));
 						ps.setUsername(rs2.getString("username"));
 						ps.setBio(rs2.getString("bio"));
@@ -395,28 +400,36 @@ public class UserModel {
 						rs3 = pmst3.executeQuery();
 						if(rs3.wasNull())
 						{ 
-							System.out.println("oknf");
+					
 							ps.setFollowing(false);
 						}
 						while(rs3.next())
 						{
-							System.out.println("okf");
+							
 							ps.setFollowing(true);
 						}
-						}
 					}
+				}
+				
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				return null;
 			}
 				
-				
 			
-			    //Add info into linked list
+			if(ps ==  null)
+			{
+				
+				return null;
+			}
+			else
+			{
 				psl.add(ps);
+			}
 			
-				
-		
+			
 		
 		try 
 		{

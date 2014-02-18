@@ -2,6 +2,7 @@ package com.tweet.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -73,6 +74,7 @@ public class Register extends HttpServlet {
 		u.setEmail(request.getParameter("newEmail"));
 		u.setName(request.getParameter("name"));
 		u.setPermission(1);
+		u.setError("");
 		
 		try
 		{
@@ -101,8 +103,12 @@ public class Register extends HttpServlet {
 		}
 		else
 		{
-			//If user cant be registered redirect to sign up 
-			response.sendRedirect("/SignUp.jsp");
+			u.setError("Could not register user");
+			request.setAttribute("Users", u);
+			 //forward tweets to Home.jsp
+		     RequestDispatcher rd = request.getRequestDispatcher("/SignUp.jsp"); 
+		      rd.forward(request, response); 
+		
 		}
 	}
 

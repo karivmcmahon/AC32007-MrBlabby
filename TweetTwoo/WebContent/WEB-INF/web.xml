@@ -9,4 +9,5 @@
     <welcome-file>SignUp.htm</welcome-file>
     <welcome-file>SignUp.jsp</welcome-file>
   </welcome-file-list>
+
 </web-app>

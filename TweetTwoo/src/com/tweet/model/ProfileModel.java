@@ -337,7 +337,7 @@ public class ProfileModel {
  * @param ps
  * @throws SQLException
  */
-public void updateProfile(UserStore u, ProfileStore ps) throws SQLException
+public boolean updateProfile(UserStore u, ProfileStore ps) throws SQLException
 {
 	//Set up connection
 	Connection conn = null;
@@ -369,6 +369,7 @@ public void updateProfile(UserStore u, ProfileStore ps) throws SQLException
 	{
 		//Display no connection available profile model
 		System.out.println("No Connection in Profile Model updateProfile()");
+		return false;
 		
 	}
 	
@@ -398,6 +399,7 @@ public void updateProfile(UserStore u, ProfileStore ps) throws SQLException
 	catch(Exception e)
 	{
 		System.out.println("Couldn't execute updateProfile()");
+		return false;
 	}
 
 
@@ -409,9 +411,10 @@ public void updateProfile(UserStore u, ProfileStore ps) throws SQLException
 	catch(Exception e)
 	{
 		System.out.println("Connection could not close");
+		return false;
 	}
 
-	
+	return true;
 	
 }
 

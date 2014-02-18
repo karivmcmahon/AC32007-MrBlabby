@@ -51,7 +51,7 @@ function deleteAccount(userID)
 	<% 	List<ProfileStore> u = (List<ProfileStore>)request.getAttribute("Profiles");
 	if (u==null){
 	 %>
-	
+		<p class="whiteFont">No users were found please search again</p>
 	<% 
 	}
 	else
@@ -63,7 +63,14 @@ function deleteAccount(userID)
 	Iterator<ProfileStore> iterator;
 
 
-	iterator = u.iterator();     
+	iterator = u.iterator();  
+	if(!iterator.hasNext())
+	{%>
+		<p class="whiteFont">No users were found please search again</p>
+	<% 
+	}
+	else
+	{
 	while (iterator.hasNext()){
 	ProfileStore md = (ProfileStore)iterator.next();
 
@@ -121,7 +128,7 @@ function deleteAccount(userID)
 	</div>
 	
 	<%
-
+	}
 	}
 	}
 

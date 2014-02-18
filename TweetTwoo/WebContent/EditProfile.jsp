@@ -26,6 +26,34 @@ function deleteAccount(userID)
     });
 }
 
+function validateUpdate()
+{
+	var nameV=document.forms["form"]["name"].value;
+	var usernameV =document.forms["form"]["username"].value;
+	var emailV =document.forms["form"]["email"].value;
+	var passwordV =document.forms["form"]["password"].value;
+	if (nameV==null || nameV=="")
+	{
+	  	alert("Name must be filled out in form to update profile");
+	  	return false;
+	}
+	if (usernameV==null || usernameV=="")
+	{
+	  	alert("Username must be filled out in form to update profile");
+	  	return false;
+	}
+	if (emailV==null || emailV=="")
+	{
+	  	alert("Email must be filled out in form to update profile");
+	  	return false;
+	}
+	if (passwordV==null || passwordV=="")
+	{
+	  	alert("Password must be filled out in form to update profile");
+	  	return false;
+	}
+
+}
 </script>
 <title>Tweet-Twoo!</title>
 </head>
@@ -38,7 +66,7 @@ function deleteAccount(userID)
 		
 		
 		<p class="bolderFont">Edit your profile</p>
-		<form action="${pageContext.request.contextPath}/EditProfile/" method="post" class="regFont">
+		<form action="${pageContext.request.contextPath}/EditProfile/" method="post" class="regFont" name="form" onsubmit="return validateUpdate()">
 		Name: <input type="text" name="name" value="${Profile.getName()}"><br>
 		Username: <input type="text" name="username" value="${Profile.getUsername()}"><br>
 		Password: <input type="password" name="password" value="${Profile.getPassword()}"><br>
@@ -49,6 +77,12 @@ function deleteAccount(userID)
 		<input type="submit" value="Update" class="button">
 		</form>
 		<input type="button" value="Delete Account" name="delete" class="button" onclick="deleteAccount(${Profile.getUserid()})" />
+		<%UserStore u = new UserStore();
+		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		if(u != null)
+		{%>
+		<p class="errorFont"><%=u.getError()%></p>
+		<%} %>
 	</div>
 	
 	

@@ -192,10 +192,16 @@ public class Tweet extends HttpServlet {
 				try 
 				{
 					//Attempts to create tweet
-					tm.createTweet(u,t);
+					u.setError("");
+					boolean v  = tm.createTweet(u,t);
+					if(v == false)
+					{
+						u.setError("Tweet could not be posted");
+					}
 				} 
 				catch (SQLException e) {
 					// TODO Auto-generated catch block
+					u.setError("Tweet could not be posted");
 					System.out.println("Creating tweet could not be execueted ");
 					e.printStackTrace();
 				}

@@ -35,7 +35,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following
 	<% 	List<ProfileStore> following = (List<ProfileStore>)request.getAttribute("Following");
 	if (following==null){
 	 %>
-		<p>You are not following anyone</p>
+		<p class="whiteFont">You are not following anyone</p>
 	<% 
 	}
 	else
@@ -47,7 +47,14 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following
 	Iterator<ProfileStore> iterator;
 
 
-	iterator = following.iterator();     
+	iterator = following.iterator(); 
+	if(!iterator.hasNext())
+	{%>
+		<p class="whiteFont">You are not following anyone</p>
+	<% 
+	}
+	else
+	{
 	while (iterator.hasNext()){
 	ProfileStore md = (ProfileStore)iterator.next();
 
@@ -64,7 +71,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following
 	</div>
 	</form>
 	<%
-
+	}
 	}
 	}
 

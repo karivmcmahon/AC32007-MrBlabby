@@ -65,19 +65,32 @@ public class Search extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		UserModel model = new UserModel();
+		LinkedList<ProfileStore> psl;
 		UserStore u = new UserStore();
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		
-		//Set up data source
-		model.setDatasource(_ds);
-		//Get name from textbox
-		String name = request.getParameter("searchbox");
-		//Store all found users in a linked list
-		LinkedList<ProfileStore> psl = model.findUser(name,u);
-		//Then send linked list to Search.jsp
-		request.setAttribute("Profiles", psl);
-		RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");  
-		rd.forward(request, response);
+		if(u == null)
+		{
+			response.sendRedirect("/SignUp.jsp");
+		}
+		else
+		{
+			//Set up data source
+			model.setDatasource(_ds);
+			//Get name from textbox
+			String name = request.getParameter("searchbox");
+			//Store all found users in a linked list
+			try
+			{
+			 psl = model.findUser(name,u);
+			}catch(Exception e)
+			{
+			  psl = null;
+			}
+			//Then send linked list to Search.jsp
+			request.setAttribute("Profiles", psl);
+			RequestDispatcher rd = request.getRequestDispatcher("/Search.jsp");  
+			rd.forward(request, response);
+		}
 		
 	}
 

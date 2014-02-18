@@ -58,6 +58,11 @@ function deleteTweet(tweetID)
 		<textarea  name="postTweet" rows="6" cols="45" class="textarea" ></textarea><br>
 		<input type="submit" value="Post It" class="button">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<span class="countdown" ></span>
+		<%UserStore u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+		if(u != null)
+		{%>
+		 <p class="errorFont"><%=u.getError()%></p>
+   		<%} %>
 		
 	</form>
 	</div>
@@ -84,9 +89,11 @@ function deleteTweet(tweetID)
 	
 
 	List<TweetStore> tweets = (List<TweetStore>)request.getAttribute("Tweets");
+	 System.out.println("oks");
 	if (tweets==null){
+	 System.out.println("ok");
 	 %>
-		<p>No tweets found</p>
+		<p class="whiteFont">Could not find any tweets. Follow users to view there tweets!</p>
 	<% 
 	}
 	else
@@ -96,10 +103,18 @@ function deleteTweet(tweetID)
 
 	<% 
 	Iterator<TweetStore> iterator;
+	System.out.println("yolo");
 
-
-	iterator = tweets.iterator();     
+	iterator = tweets.iterator();  
+	if(!iterator.hasNext())
+	{%>
+		<p class="whiteFont">Could not find any tweets. Follow users to view their tweets!</p>
+	<% 
+	}
+	else
+	{
 	while (iterator.hasNext()){
+		
 	TweetStore md = (TweetStore)iterator.next();
 
 	%>
@@ -115,7 +130,7 @@ function deleteTweet(tweetID)
 	<br><br><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span>
 	
 	<% 
-	UserStore u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+	
 	if(u == null)
 	{
 		System.out.println("null");
@@ -131,7 +146,7 @@ function deleteTweet(tweetID)
 	</div>
 	
 	<%
-
+	}
 	}
 	}
 

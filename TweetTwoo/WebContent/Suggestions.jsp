@@ -35,7 +35,7 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("sl
 		<% 	List<ProfileStore> suggestions = (List<ProfileStore>)request.getAttribute("Suggestions");
 			if (suggestions==null){
 			 %>
-				<p>You have no suggestions</p>
+				<p class="whiteFont">No suggestions for you were found</p>
 			<% 
 			}
 			else
@@ -46,8 +46,14 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("sl
 			<% 
 			Iterator<ProfileStore> iterator;
 		
-		
-			iterator = suggestions.iterator();     
+			iterator = suggestions.iterator(); 
+			if(!iterator.hasNext())
+			{%>
+				<p class="whiteFont">No suggestions for you were found</p>
+			<% 
+			}
+			else
+			{
 			while (iterator.hasNext()){
 			ProfileStore md = (ProfileStore)iterator.next();
 		
@@ -64,7 +70,7 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("sl
 			</div>
 			</form>
 			<%
-		
+			}
 			}
 			}
 		

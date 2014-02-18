@@ -104,6 +104,7 @@ public class EditProfile extends HttpServlet {
 		//Set up data source
 		prof.setDatasource(_ds);
 		
+		user.setError("");
 		//Get information from textboxes in EditProfile.jsp
 		ps.setName(request.getParameter("name"));
 		ps.setUsername(request.getParameter("username"));
@@ -116,16 +117,27 @@ public class EditProfile extends HttpServlet {
 		try
 		{
 			//Attempt to update users profile
-			prof.updateProfile(user,ps);
+			boolean v = prof.updateProfile(user,ps);
+			if(v == false)
+			{
+				user.setError("Could not update profile");
+				response.sendRedirect("/TweetTwoo/EditProfile");
+			}
+			else
+			{
+				response.sendRedirect("/TweetTwoo/Profile");
+			}
 		} catch (SQLException e) 
 		{
+			user.setError("Could not update profile");
 			System.out.println("Error updating user profile : ");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			response.sendRedirect("/TweetTwoo/EditProfile");
 		}
 		
 		//Redirect to users profile after update
-		response.sendRedirect("/TweetTwoo/Profile");
+		//response.sendRedirect("/TweetTwoo/Profile");
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 

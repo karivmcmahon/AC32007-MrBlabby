@@ -456,7 +456,7 @@ public class TweetModel {
 	 * @param t
 	 * @throws SQLException
 	 */
-	public void createTweet(UserStore u,TweetStore t) throws SQLException
+	public boolean createTweet(UserStore u,TweetStore t) throws SQLException
 	{
 		//Set up connection variable
 		Connection Conn = null;
@@ -475,7 +475,7 @@ public class TweetModel {
 		{
 			//Display no connection available in tweets model
 			System.out.println("No Connection in Tweets Model createTweet()");
-			
+			return false;
 		}
 
 		//Set up prepared statement
@@ -501,6 +501,7 @@ public class TweetModel {
 				catch(Exception e)
 				{
 					System.out.println("Can't execute query createTweet()");
+					return false;
 				}
 		
 
@@ -512,8 +513,9 @@ public class TweetModel {
 	catch(Exception e)
 	{
 		System.out.println("Connection could not close");
+		return false;
 	}
-
+	return true;
 	
 	}
 	

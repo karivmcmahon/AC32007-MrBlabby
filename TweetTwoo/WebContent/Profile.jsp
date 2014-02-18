@@ -84,7 +84,7 @@ function deleteTweet(tweetID)
 			List<TweetStore> tweets = (List<TweetStore>)request.getAttribute("Tweets");
 			if (tweets==null){
  			%>
-				<p>No tweets found</p>
+				<p class="whiteFont">Could not find any of your tweets</p>
 			<% 
 			}
 			else
@@ -94,9 +94,16 @@ function deleteTweet(tweetID)
 
 			<% 
 			Iterator<TweetStore> iterator;
+			
 
-
-			iterator = tweets.iterator();     
+			iterator = tweets.iterator();  
+			if(!iterator.hasNext())
+			{%>
+				<p class="whiteFont">Could not find any of your tweets.</p>
+			<% 
+			}
+			else
+			{
 			while (iterator.hasNext()){
 			TweetStore md = (TweetStore)iterator.next();
 
@@ -108,7 +115,7 @@ function deleteTweet(tweetID)
 		<br/> <br/><br/>
 	</div>
 	<%
-
+	}
 	}
 	}
 

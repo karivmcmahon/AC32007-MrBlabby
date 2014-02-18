@@ -10,6 +10,7 @@ public class UserStore {
 	private boolean valid;
 	public boolean loggedIn = false;
 	public int permission;
+	public String error = "";
 	
 	public void setPermission(int p)
 	{
@@ -19,6 +20,16 @@ public class UserStore {
 	public int getPermission()
 	{
 		return permission;
+	}
+	
+	public void setError(String e)
+	{
+		error = e;
+	}
+	
+	public String getError()
+	{
+		return error;
 	}
 	
 	public void setUserid(int id)

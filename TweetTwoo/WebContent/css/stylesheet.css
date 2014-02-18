@@ -292,6 +292,13 @@ p.font
 	color:black;
 }
 
+.errorFont
+{
+	font-family: 'Glegoo', serif;
+	font-size:80%;
+	color:red;
+}
+
 .tweetFont
 {
 	font-family: 'Glegoo', serif;

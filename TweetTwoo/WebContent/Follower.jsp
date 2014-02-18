@@ -36,7 +36,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower 
 			<% 	List<ProfileStore> followers = (List<ProfileStore>)request.getAttribute("Followers");
 			if (followers==null){
 			 %>
-				<p>You have no followers</p>
+				<p class="whiteFont">You have no followers</p>
 			<% 
 			}
 			else
@@ -48,7 +48,14 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower 
 			Iterator<ProfileStore> iterator;
 		
 		
-			iterator = followers.iterator();     
+			iterator = followers.iterator(); 
+			if(!iterator.hasNext())
+			{%>
+				<p class="whiteFont">You have no followers</p>
+			<% 
+			}
+			else
+			{
 			while (iterator.hasNext()){
 			ProfileStore md = (ProfileStore)iterator.next();
 		
@@ -63,7 +70,7 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower 
 			<br/> <br/><br/>
 			</div>
 			<%
-		
+			}
 			}
 			}
 		
