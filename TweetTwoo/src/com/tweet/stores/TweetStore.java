@@ -1,6 +1,11 @@
 package com.tweet.stores;
 import java.sql.Timestamp;
 
+/**
+ * Tweet store stores information that relates to tweets
+ * @author Kari
+ *
+ */
 public class TweetStore {
 	
 	private int tweetid;

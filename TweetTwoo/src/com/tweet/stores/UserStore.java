@@ -1,5 +1,10 @@
 package com.tweet.stores;
 
+/**
+ * User store stores information relating to the specific user 
+ * @author Kari
+ *
+ */
 public class UserStore {
 	
 	private int userid;
@@ -11,6 +16,7 @@ public class UserStore {
 	public boolean loggedIn = false;
 	public int permission;
 	public String error = "";
+	public boolean delError = false;
 	
 	public void setPermission(int p)
 	{
@@ -101,6 +107,16 @@ public class UserStore {
 	{
 		System.out.println("logged in " + loggedIn);
 		return loggedIn;
+	}
+	
+	public boolean getDelError()
+	{
+		return delError;
+	}
+	
+	public void setDelError(boolean d)
+	{
+		delError = d;
 	}
 	
 

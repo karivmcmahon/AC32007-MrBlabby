@@ -33,7 +33,7 @@ public class UserModel {
 	/**
 	 * Method attempts to log user in
 	 * @param us
-	 * @return
+	 * @return UserStore
 	 * @throws SQLException
 	 */
 	public UserStore login(UserStore us) throws SQLException
@@ -131,7 +131,7 @@ public class UserModel {
 	/**
 	 * Method registers users by adding there information to the database
 	 * @param u
-	 * @return
+	 * @return int
 	 * @throws SQLException
 	 */
 	public int registerUser(UserStore u) throws SQLException
@@ -291,21 +291,31 @@ public class UserModel {
 					System.out.print("Could not close connection");
 					return 0;
 				}
-	//return userid
-	return userid;
+				//return userid
+				return userid;
 	
 	
 	}
 	
+	/**
+	 * Retrieves users that are like what the user searched for
+	 * @param name
+	 * @param u
+	 * @return LinkedList
+	 */
 	public LinkedList<ProfileStore> findUser(String name,UserStore u)
 	{
-		System.out.println("ok");
+		//LinkedList to store users returned
 		LinkedList<ProfileStore> psl = new LinkedList<ProfileStore>();
+		//Store connection
 		Connection Conns;
+		//Store profile
 		ProfileStore ps = null;
+		//Store results
 		ResultSet rs;
 		ResultSet rs2;
 		ResultSet rs3;
+		//Get user id
 		int uid = u.getUserid();
 		try 
 		{
@@ -371,19 +381,20 @@ public class UserModel {
 				while (rs.next()) 
 				{
 				
-					int rows = rs.getInt(1);
-					if(rows == 0)
-					{
-						return null;
-					}
-					System.out.println("ok3");
 					//Get and set info from result set
 					ps = new ProfileStore();
 					int id = rs.getInt("userid");
-					System.out.println(id);
-					pmst2 = Conns.prepareStatement(sqlQuery2);
-					pmst2.setInt(1, id);
-					rs2 = pmst2.executeQuery();
+					try
+					{
+						pmst2 = Conns.prepareStatement(sqlQuery2);
+						pmst2.setInt(1, id);
+					}catch(Exception e)
+					{
+						System.out.println("Could not prepare second statement findUser()");
+					}
+					
+						rs2 = pmst2.executeQuery();
+					
 					while(rs2.next())
 					{
 						
@@ -418,7 +429,7 @@ public class UserModel {
 				return null;
 			}
 				
-			
+			//If profile store is null return null
 			if(ps ==  null)
 			{
 				
@@ -426,6 +437,7 @@ public class UserModel {
 			}
 			else
 			{
+				//If it's not null add to the linked list
 				psl.add(ps);
 			}
 			

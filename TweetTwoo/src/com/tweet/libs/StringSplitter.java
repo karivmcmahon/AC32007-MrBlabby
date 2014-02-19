@@ -13,6 +13,11 @@ public class StringSplitter
 		
 	}
 	
+	/**
+	 * Enables us to split the url
+	 * @param request
+	 * @return
+	 */
 	public static String[] SplitRequestPath(HttpServletRequest request){
 		String args[] = null;
 

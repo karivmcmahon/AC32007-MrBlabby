@@ -456,7 +456,8 @@ public void deleteAccount(int id)
 	try 
 	{
 		pmst.executeUpdate();
-	} catch (SQLException e1) 
+	} 
+	catch (SQLException e1) 
 	{
 		System.out.println("Can't execute query deleteAccount()");
 		// TODO Auto-generated catch block

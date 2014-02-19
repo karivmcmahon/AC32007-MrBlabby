@@ -70,6 +70,7 @@ public class conn {
 	 
 	// create the schema if it doesn't exist
 		private void CreateSchema(DataSource _ds) {
+			System.out.println("yello");
 			PreparedStatement pmst = null;
 			Connection Conn;
 			try {
@@ -157,7 +158,8 @@ public class conn {
 				{
 				    int rows = rs.getInt(1);
 				    System.out.println("Number of Rows " + rows);
-				    if (rows==0){
+				    if (rows==0)
+				    {
 				    	sqlQuery="INSERT INTO users (name,email,username,password,permission)"
 				    			+ " VALUES ('Andy','Andy@aol.co.uk','andy_uk','p456nh',1),"
 				    			+ "('Beyonce','Queenb@hotmail.com','beyonce','blueivy22',1),"

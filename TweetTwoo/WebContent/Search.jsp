@@ -15,6 +15,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <title>Tweet-Twoo!</title>
+
 <script>
 function deleteAccount(userID)
 {

@@ -59,6 +59,7 @@ public class Login extends HttpServlet {
 	}
 
 	/**
+	 * Enables us to get information from view to send to model to confirm login
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

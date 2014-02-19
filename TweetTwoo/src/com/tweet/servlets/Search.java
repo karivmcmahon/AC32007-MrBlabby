@@ -52,6 +52,7 @@ public class Search extends HttpServlet {
    	}
 
 	/**
+	 * Directs to search.jsp
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,6 +61,7 @@ public class Search extends HttpServlet {
 	}
 
 	/**
+	 * Gets who the user searches for and returns the results
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -70,6 +72,7 @@ public class Search extends HttpServlet {
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
 		if(u == null)
 		{
+			//Redirect to sign up
 			response.sendRedirect("/SignUp.jsp");
 		}
 		else

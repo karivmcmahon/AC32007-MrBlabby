@@ -35,7 +35,7 @@ public class TweetModel {
 	/**
 	 * Gets tweets for home.jsp timeline
 	 * @param u
-	 * @return
+	 * @return LinkedList
 	 */
 	public LinkedList<TweetStore> getTweets(UserStore u)
 	{
@@ -113,10 +113,24 @@ public class TweetModel {
 				ps.setTweet(rs.getString("tweet"));
 				ps.setTime(rs.getTimestamp("time"));
 			    tweetuserid = rs.getInt("user_tweet_id");
-			    System.out.println("UID " +  tweetuserid);
-			    pmst = Conns.prepareStatement(sqlQuery2);
-				pmst.setInt(1,tweetuserid);
-			    rs2 = pmst.executeQuery();
+			    //attempt to prepare second query
+			    try
+			    {
+			    	pmst = Conns.prepareStatement(sqlQuery2);
+			    	pmst.setInt(1,tweetuserid);
+			    }
+			    catch(Exception e)
+			    {
+			    	System.out.println("Could not prepare second query in getTweets()");
+			    }
+			    //Attempt to execute second query
+			    try
+			    {
+			    	rs2 = pmst.executeQuery();
+			    }catch(Exception e)
+			    {
+			    	System.out.println("Could not execute second query in getTweets()");
+			    }
 			    while(rs2.next())
 			    {
 			    	ps.setName(rs2.getString("name"));
@@ -154,7 +168,7 @@ public class TweetModel {
 	/**
 	 * Get tweets from one certain user
 	 * @param u
-	 * @return
+	 * @return LinkedList
 	 */
 	public LinkedList<TweetStore> getOwnTweets(UserStore u)
 	{
@@ -353,7 +367,7 @@ public class TweetModel {
 	/**
 	 * Get tweets based on id
 	 * @param u
-	 * @return
+	 * @return LinkedList
 	 */
 	public LinkedList<TweetStore> getTweetsByUsername(UserStore u)
 	{
@@ -454,6 +468,7 @@ public class TweetModel {
 	 * Inserts tweets into database when created
 	 * @param u
 	 * @param t
+	 * @return boolean
 	 * @throws SQLException
 	 */
 	public boolean createTweet(UserStore u,TweetStore t) throws SQLException
@@ -496,6 +511,7 @@ public class TweetModel {
 				
 				try
 				{
+					//Attempt to execute update
 					pmst.executeUpdate();
 				}
 				catch(Exception e)
@@ -522,8 +538,9 @@ public class TweetModel {
 	/**
 	 * Deletes tweet from database by id
 	 * @param id
+	 * @return boolean
 	 */
-	public void deleteTweet(int id)
+	public boolean deleteTweet(int id)
 	{
 		Connection Conns = null;
 		try 
@@ -535,6 +552,7 @@ public class TweetModel {
 		{
 			//Display no connection available
 			System.out.println("No Connection in Following Model deleteTweet()");
+			return false;
 			
 		}
 		
@@ -551,7 +569,7 @@ public class TweetModel {
 		catch (Exception et)
 		{
 			System.out.println("Can't create prepare statement deleteTweet()");
-			
+			return false;
 		}
 		
 		try 
@@ -563,6 +581,7 @@ public class TweetModel {
 			System.out.println("Can't execute query deleteTweet()");
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			return false;
 		}
 		
 
@@ -574,7 +593,9 @@ public class TweetModel {
 		catch(Exception e)
 		{
 			System.out.println("Connection could not close");
+			return false;
 		}
+		return true;
 	}
 }
 	

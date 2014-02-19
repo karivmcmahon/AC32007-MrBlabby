@@ -67,6 +67,7 @@ public class Tweet extends HttpServlet {
    	}
 
 	/**
+	 * Enables us to get tweets from model and display on view
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,13 +79,14 @@ public class Tweet extends HttpServlet {
 		
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		//if user is null
 		if(u == null)
 		{
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
-		
+		//check if user is logged in 
 		if(u.getLoggedIn() == true)
 		{
 			if(request.getRequestURI().equals(request.getContextPath() + "/Tweet"))
@@ -164,6 +166,7 @@ public class Tweet extends HttpServlet {
 	}
 
 	/**
+	 * Enables us to send information from view to model
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -219,9 +222,14 @@ public class Tweet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Enable us to delete a user from the model 
+	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		TweetModel Tweet = new TweetModel();
+		UserStore u = new UserStore();
+		u = (UserStore) request.getSession().getAttribute("currentUserSesh");
 		System.out.println(request.getRequestURI());
 		
 		//Split string
@@ -232,7 +240,11 @@ public class Tweet extends HttpServlet {
 		
 		//Delete tweet based on id
 		Tweet.setDatasource(_ds);
-		Tweet.deleteTweet(id);
+		System.out.println("del");
+	
+		boolean v = Tweet.deleteTweet(id);
+		
+		
 		
 	}
 

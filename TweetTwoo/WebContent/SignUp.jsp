@@ -15,6 +15,8 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <title>Tweet-Twoo!</title>
 </head>
+
+<!-- Script to validate register form has no nulls -->
 <script>
 function validateRegister()
 {
@@ -45,6 +47,7 @@ function validateRegister()
 
 }
 
+//Script to validate if user logs in
 function validateLogin()
 {
 	var un=document.forms["loginForm"]["username"].value;

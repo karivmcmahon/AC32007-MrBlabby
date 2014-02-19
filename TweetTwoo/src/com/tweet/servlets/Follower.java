@@ -54,6 +54,7 @@ public class Follower extends HttpServlet {
    	
 
 	/**
+	 * Enables us to get who the user followers are from model and send to view
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -86,13 +87,13 @@ public class Follower extends HttpServlet {
 						//Get users followers by passing current logged in users info
 						LinkedList<ProfileStore> lps = fm.getFollowers(u);
 					
-						
+						//If url ends in json then create a json object
 						if(urlEnd.equals("json"))
 						{
 							//Sends users own tweets to JSON to get as a JSON object
 							request.setAttribute("data", lps);
-				            System.out.println("l");
-				            request.getRequestDispatcher("/Json").forward(request, response);
+				            RequestDispatcher rd = request.getRequestDispatcher("/Json");
+				            rd.forward(request, response);
 				            return;
 						}
 						else
@@ -113,6 +114,7 @@ public class Follower extends HttpServlet {
 	}
 
 	/**
+	 * Enables us to get who user wants to follow from view and send to model
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

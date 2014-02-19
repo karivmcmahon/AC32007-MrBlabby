@@ -53,6 +53,7 @@ public class Profile extends HttpServlet {
    	}
 
 	/**
+	 * Enables us to get profile information from model to display in view
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,10 +66,12 @@ public class Profile extends HttpServlet {
 		
 		if(u == null)
 		{
+			//Redirect to sign up page if current user sesh is null
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
+			//check if users logged in
 			if(u.getLoggedIn() == true)
 			{
 				//Get end of url

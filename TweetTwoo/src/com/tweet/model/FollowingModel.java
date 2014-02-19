@@ -107,10 +107,26 @@ public class FollowingModel {
 				ps = new ProfileStore();
 				int ids = rs.getInt("following_id");
 				
-			    pmst2 = Conns.prepareStatement(sqlQuery2);
-				pmst2.setInt(1,ids);
-				pmst2.setInt(2, ids);
-			    rs2 = pmst2.executeQuery();
+				//Prepare and execute second query
+				try
+				{
+					pmst2 = Conns.prepareStatement(sqlQuery2);
+					pmst2.setInt(1,ids);
+					pmst2.setInt(2, ids);
+				}
+				catch(Exception e)
+				{
+					System.out.println("Could not prepare second query getFollowing()");
+				}
+				
+				try
+				{
+					rs2 = pmst2.executeQuery();
+				}
+				catch(Exception e)
+				{
+					System.out.println("Could not execute second query getFollowing()");
+				}
 			   
 			    while(rs2.next())
 			    {
@@ -129,7 +145,7 @@ public class FollowingModel {
 		} 
 		catch (Exception ex)
 		{
-			System.out.println("Opps, error in query getFollowing() " + ex);
+			System.out.println("Opps, error in getFollowing() " + ex);
 			return null;
 		}
 
@@ -141,7 +157,7 @@ public class FollowingModel {
 		} 
 		catch (Exception ex) 
 		{
-			System.out.println("Connection could not be closed");
+			System.out.println("Connection could not be closed in getFollowing()");
 			return null;
 		}
 		//Return linked list
@@ -229,10 +245,28 @@ public class FollowingModel {
 				int ids = rs.getInt("user_id");
 				System.out.println("ID s" + ids);
 			    
-				pmst2 = Conns.prepareStatement(sqlQuery2);
-				pmst2.setInt(1,ids);
-				pmst2.setInt(2, ids);
-			    rs2 = pmst2.executeQuery();
+				//prepare second query
+				try
+				{
+					pmst2 = Conns.prepareStatement(sqlQuery2);
+					pmst2.setInt(1,ids);
+					pmst2.setInt(2, ids);
+				}
+				catch(Exception e)
+				{
+					System.out.println("Second query in getFollowers() could not be prepared");
+				}
+				
+				//execute second query
+				try
+				{
+					rs2 = pmst2.executeQuery();
+				}
+				catch(Exception e)
+				{
+					System.out.println("Second query in getFollwers() could not execute");
+				}
+			    
 			    while(rs2.next())
 			    {
 			    	ps.setName(rs2.getString("name"));
@@ -348,10 +382,24 @@ public class FollowingModel {
 				//Get and set info from result set
 				ps = new ProfileStore();
 				int ids = rs.getInt("following_id");
-			    pmst2 = Conns.prepareStatement(sqlQuery2);
-				pmst2.setInt(1,ids);
-				pmst2.setInt(2, ids);
-			    rs2 = pmst2.executeQuery();
+				
+				try
+				{
+					pmst2 = Conns.prepareStatement(sqlQuery2);
+					pmst2.setInt(1,ids);
+					pmst2.setInt(2, ids);
+				}catch(Exception e)
+				{
+					System.out.println("Could not prepare second query in getSuggestions()");
+				}
+				
+				try
+				{
+					rs2 = pmst2.executeQuery();
+				}catch(Exception e)
+				{
+					System.out.println("Could not execute second query in getSuggestions()");
+				}
 			    
 			    while(rs2.next())
 			    {
@@ -425,6 +473,7 @@ public class FollowingModel {
 		} 
 		catch (Exception et)
 		{
+			
 			System.out.println("Can't create prepare statement followUser()");
 			
 		}
@@ -436,7 +485,7 @@ public class FollowingModel {
 		} 
 		catch (SQLException e1) 
 		{
-			// TODO Auto-generated catch block
+			//Display that follow user could not be executed
 			System.out.println("The statment couldn't execute followUser()");
 			e1.printStackTrace();
 		}
@@ -449,7 +498,7 @@ public class FollowingModel {
 		}
 		catch(Exception e)
 		{
-			System.out.println("Connection could not close");
+			System.out.println("Connection could not close followUser()");
 		}
 	}
 	
@@ -497,7 +546,7 @@ public class FollowingModel {
 		} 
 		catch (SQLException e1) 
 		{
-			// TODO Auto-generated catch block
+			// Display you can't execute query
 			System.out.println("Can't execute query unfollowUser()");
 			e1.printStackTrace();
 		}

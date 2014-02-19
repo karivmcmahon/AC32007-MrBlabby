@@ -10,7 +10,7 @@
 	<div class="header">
 		<ul class="headerBar">
 			<li class="link2"><a href="" class="tweetTwoo">Tweet-Twoo!</a></li>
-			<li class="owlLink"><img src="images/rotate100owl.png" width="30px" height="30px" /></li>
+			<li class="owlLink"><img src="${pageContext.request.contextPath}/images/rotate100owl.png" width="30px" height="30px" /></li>
 			<!--  Owl logo found online and is free to use under public domain - site can be found here http://www.clipartlord.com/free-cute-cartoon-owls-perched-branch-clip-art/ -->
 			<li class="link"><a href="${pageContext.request.contextPath}/Tweet" >Home</a></li>
 			<li class="link"><a href="${pageContext.request.contextPath}/Profile">Profile</a></li>

@@ -55,6 +55,7 @@ public class EditProfile extends HttpServlet {
    	}
 
 	/**
+	 * Enables getting profile to place in textboxs in edit profile page
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -64,13 +65,15 @@ public class EditProfile extends HttpServlet {
 		ProfileStore ps = new ProfileStore();
 		//Get information of user who is currently logged in
 		user = (UserStore)  request.getSession().getAttribute("currentSeshUser");
-		
+		//If no current information
 		if(user == null)
 		{
+			//Redirect to sign up page
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
+			//Checks if user is logged in
 			if(user.getLoggedIn() == true)
 			{
 				//Set up data source and get information for editing profile
@@ -84,6 +87,7 @@ public class EditProfile extends HttpServlet {
 			}
 			else
 			{
+				//If not logged in redirect to sign up page
 				response.sendRedirect("/TweetTwoo/SignUp.jsp");
 			}
 		}
@@ -91,6 +95,7 @@ public class EditProfile extends HttpServlet {
 	}
 
 	/**
+	 * Enables updating profile
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -103,7 +108,7 @@ public class EditProfile extends HttpServlet {
 		
 		//Set up data source
 		prof.setDatasource(_ds);
-		
+		//Set error to empty
 		user.setError("");
 		//Get information from textboxes in EditProfile.jsp
 		ps.setName(request.getParameter("name"));
@@ -120,26 +125,33 @@ public class EditProfile extends HttpServlet {
 			boolean v = prof.updateProfile(user,ps);
 			if(v == false)
 			{
+				//Set error to show you could not update profile and redirect to edit profile
 				user.setError("Could not update profile");
 				response.sendRedirect("/TweetTwoo/EditProfile");
 			}
 			else
 			{
+				//Redirect to profile if update sucessful
 				response.sendRedirect("/TweetTwoo/Profile");
 			}
-		} catch (SQLException e) 
+		} 
+		catch (SQLException e) 
 		{
+			//Set error to display in html
 			user.setError("Could not update profile");
 			System.out.println("Error updating user profile : ");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			//Redirect to edit profile
 			response.sendRedirect("/TweetTwoo/EditProfile");
 		}
 		
-		//Redirect to users profile after update
-		//response.sendRedirect("/TweetTwoo/Profile");
+		
 	}
 	
+	/**
+	 * Enables us to delete a users account
+	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		
@@ -152,13 +164,15 @@ public class EditProfile extends HttpServlet {
 		StringSplitter SS = new StringSplitter();
 		String args[]  = SS.SplitRequestPath(request);
 		int id = Integer.parseInt(args[2]);
-		
+		//Set up data source
 		prof.setDatasource(_ds);
 		try
 		{
 			//Attempt to delete account then invalidate account
 			prof.deleteAccount(id);
+			//Set as logged in false
 			u.setLoggedIn(false);
+			//Invalidate session
 			request.getSession().invalidate();
 			//Redirect user to sign up/log in page once they have logged out
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");

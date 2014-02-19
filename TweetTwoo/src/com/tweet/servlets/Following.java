@@ -55,6 +55,7 @@ public class Following extends HttpServlet {
    	}
 
 	/**
+	 * Enables us to get who is following user from model and send to view
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,12 +63,14 @@ public class Following extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		//If u null then redirect to sign up object
 		if(u == null)
 		{
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
 		{
+		//check user is logged in
 		 if(u.getLoggedIn() == true)
 		 {
 		
@@ -101,6 +104,7 @@ public class Following extends HttpServlet {
 		}
 		else
 		{
+			//Redirect to sign up page if not logged in
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		}
@@ -109,6 +113,7 @@ public class Following extends HttpServlet {
 	}
 
 	/**
+	 * Enables us to unfollow user by sending information from view to model
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -2,6 +2,12 @@ package com.tweet.stores;
 
 import java.sql.Blob;
 
+/**
+ * Profile store stores information to create user profiles
+ * @author Kari
+ *
+ */
+
 public class ProfileStore {
 	private int profileId;
 	private String name;

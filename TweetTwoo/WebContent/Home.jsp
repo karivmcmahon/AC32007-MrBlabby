@@ -14,6 +14,7 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 <!-- Ajax script to refresh tweet timeline every minute, fade out is fast to show refresh occuring -->
 <script>
 var auto_refresh = setInterval(
@@ -23,6 +24,7 @@ function()
 $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Tweet #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+
 <!-- Script to delete users own tweet -->
 <script>
 function deleteTweet(tweetID)
@@ -32,6 +34,8 @@ function deleteTweet(tweetID)
         type:"DELETE",
         cache:false
     }).done(function() {
+    	
+    		
         //Refresh page
         document.location.reload(true);
     });
@@ -93,7 +97,7 @@ function deleteTweet(tweetID)
 	if (tweets==null){
 	 System.out.println("ok");
 	 %>
-		<p class="whiteFont">Could not find any tweets. Follow users to view there tweets!</p>
+		<p class="whiteFont">Could not find any tweets.</p>
 	<% 
 	}
 	else
@@ -106,13 +110,7 @@ function deleteTweet(tweetID)
 	System.out.println("yolo");
 
 	iterator = tweets.iterator();  
-	if(!iterator.hasNext())
-	{%>
-		<p class="whiteFont">Could not find any tweets. Follow users to view their tweets!</p>
-	<% 
-	}
-	else
-	{
+
 	while (iterator.hasNext()){
 		
 	TweetStore md = (TweetStore)iterator.next();
@@ -139,14 +137,14 @@ function deleteTweet(tweetID)
 		if(md.getUserid() == u.getUserid())
 	{
 	%>
-	 <input type="image" class="images" onclick="deleteMessage(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/>
-	 <%} %>
+	 <input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/>
+  <%} %>
 		
 	<br/> <br/><br/>
 	</div>
 	
 	<%
-	}
+	
 	}
 	}
 

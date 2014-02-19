@@ -13,6 +13,7 @@
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 <!-- Ajax script to refresh following every minute, fade out is fast to show refresh occuring -->
 <script>
 var auto_refresh = setInterval(
@@ -22,6 +23,7 @@ function()
 $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+
 <title>Tweet-Twoo!</title>
 </head>
 <body class="general">

@@ -12,7 +12,9 @@
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<!-- Ajax script to delete a user account -->
 <script>
 function deleteAccount(userID)
 {
@@ -26,6 +28,7 @@ function deleteAccount(userID)
     });
 }
 
+//Function to validate that no nulls are being sent in form
 function validateUpdate()
 {
 	var nameV=document.forms["form"]["name"].value;

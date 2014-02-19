@@ -63,6 +63,9 @@ public class User extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 	
+	/**
+	 * Enables us to get information about user to be deleted and delete them in the model
+	 */
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		ProfileModel prof = new ProfileModel();

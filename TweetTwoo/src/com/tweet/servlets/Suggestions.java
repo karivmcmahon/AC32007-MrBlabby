@@ -53,6 +53,7 @@ public class Suggestions extends HttpServlet {
    	}
 
 	/**
+	 * Enables us to get suggestions from the model and display in view
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,9 +61,10 @@ public class Suggestions extends HttpServlet {
 		UserStore u = new UserStore();
 		//Get session for user currently logged in
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
-		
+		//if user null
 		if(u == null)
 		{
+			//redirect to sign up
 			response.sendRedirect("/TweetTwoo/SignUp.jsp");
 		}
 		else
