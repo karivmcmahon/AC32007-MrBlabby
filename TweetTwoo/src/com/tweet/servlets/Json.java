@@ -20,9 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 		urlPatterns = { 
 		"/Json", 
 		"/Json/*"
-}, 
-initParams = { 
-		@WebInitParam(name = "data-source", value = "jdbc/faultdb")
 })
 public class Json extends HttpServlet {
 	private static final long serialVersionUID = 1L;

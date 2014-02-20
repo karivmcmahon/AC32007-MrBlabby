@@ -51,7 +51,8 @@ public class EditProfile extends HttpServlet {
    		// TODO Auto-generated method stub
    		//Initialise connection
    		conn db = new conn();
-           _ds=db.assemble(config);
+   		db.createSchema();
+   		_ds=db.assemble(config);
    	}
 
 	/**

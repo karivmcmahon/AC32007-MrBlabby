@@ -28,8 +28,8 @@ import com.tweet.stores.UserStore;
 		"/Follower/*"
 }, 
 initParams = { 
-		@WebInitParam(name = "data-source", value = "jdbc/faultdb")
-})
+				@WebInitParam(name = "data-source", value = "jdbc/faultdb")
+		})
 public class Follower extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
@@ -49,7 +49,8 @@ public class Follower extends HttpServlet {
    		// TODO Auto-generated method stub
    		//Initialise connection
    		conn db = new conn();
-           _ds=db.assemble(config);
+   		db.createSchema();
+   		_ds=db.assemble(config);
    	}
    	
 

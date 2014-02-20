@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-<Resource name="jdbc/faultdb" 
+ <Resource name="jdbc/faultdb" 
     type="javax.sql.DataSource"
     auth="Container" 
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	driverClassName="com.mysql.jdbc.Driver" 
-	url="jdbc:mysql://localhost:3306/Faultdb"
+	url="jdbc:mysql://localhost:3306/tweettwookari"
 	username="root" password="Cl1m8t3;" 
     jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
 />
