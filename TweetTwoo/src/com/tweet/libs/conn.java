@@ -133,15 +133,16 @@ public class conn {
 			}
 			
 			
-			sqlQuery = "CREATE TABLE IF NOT EXISTS followRelationships(" +
-							"user_follower_id INT NOT NULL AUTO_INCREMENT," +
-							"user_id INT NOT NULL," +
-							"following_id INT NOT NULL," +
-							"PRIMARY KEY(user_follower_id)," +
-							"FOREIGN KEY(user_id)" +
-								"REFERENCES users(userid)" +
-								"ON DELETE CASCADE ON UPDATE CASCADE" +
-						") ENGINE=INNODB;";
+			sqlQuery = "CREATE TABLE IF NOT EXISTS `followrelationships` (" +
+					 "`user_follower_id` int(11) NOT NULL AUTO_INCREMENT," +
+					 "`user_id` int(11) NOT NULL," +
+					 "`following_id` int(11) NOT NULL," +
+					  "PRIMARY KEY (`user_follower_id`)," +
+					  "KEY `user_id` (`user_id`)," +
+					  "CONSTRAINT `followrelationships_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE," +
+					"KEY `following_id`(`following_id`)," +
+					"CONSTRAINT  `fid` FOREIGN KEY (`following_id`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE" +
+					") ENGINE=InnoDB;";
 			try {
 				pmst = Conn.prepareStatement(sqlQuery);
 				pmst.executeUpdate();

@@ -5,7 +5,7 @@
     auth="Container" 
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	driverClassName="com.mysql.jdbc.Driver" 
-	url="jdbc:mysql://localhost:3306/29292"
+	url="jdbc:mysql://localhost:3306/new4"
 	username="root" password="root" 
     jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
 />
