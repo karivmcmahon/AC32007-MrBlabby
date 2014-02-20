@@ -5,7 +5,7 @@ Repository for AC32007 twitter clone assignment - MySql by Kari McMahon
 
 Description and challeneges with assignment :
 
-Account you can log into:
+Account you can log into and you can see more to log into with in the conn.java class:
 Username : Beyonce Password : blueivy22 who has a permission of 1 and is a user.
 Username : tomcat  Password : mn2er3 who has a permission of 2 and is admin.
 Username : kimk    Password : lmaolol who has a permission of 3 and is a developer.
