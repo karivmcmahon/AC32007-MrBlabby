@@ -39,6 +39,21 @@ function deleteTweet(tweetID)
 }
 
 </script>
+<!-- Enables user to delete account they have searched for if they have the right permissions -->
+<script>
+function deleteAccount(userID)
+{
+    $.ajax({
+        url:"${pageContext.request.contextPath}/User/" + userID,
+        type:"DELETE",
+        cache:false
+    }).done(function() {
+        //Refresh page
+        document.location.reload(true);
+    });
+}
+
+</script>
 
 <title>Tweet-Twoo!</title>
 </head>
@@ -101,6 +116,10 @@ function deleteTweet(tweetID)
 							</form>
 							<%
 							}
+							else if(u.getPermission() == 2 && md.getPermission() == 1 || u.getPermission() == 3 && md.getPermission() == 1 || u.getPermission() == 3 && md.getPermission() == 2)
+							{%>
+								<input type="button" value="Delete" class="button"  onclick="deleteAccount(<%= md.getUserid()%>)">
+							<% }
 							if(md.getFollowing() == true && md.getUserid() != u.getUserid())
 							{
 							%>	

@@ -284,7 +284,7 @@ public class ProfileModel {
 		int id = 0;
 		
 		//Query to retrieve info for profile
-		String sqlQuery = "SELECT name,username,bio,location,country,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.username = ? ;";
+		String sqlQuery = "SELECT name,username,bio,location,country,userid,permission FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.username = ? ;";
 		//Query to retrieve number of people the user is following
 		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
 		//Query to retrieve number of followers the user has
@@ -338,6 +338,7 @@ public class ProfileModel {
 				ps.setLocation(rs.getString("location"));
 				ps.setCountry(rs.getString("country"));
 				ps.setUserid(id);
+				ps.setPermission(rs.getInt("permission"));
 
 			}
 			
@@ -532,7 +533,7 @@ public class ProfileModel {
 		int id = 0;
 		
 		//Query to retrieve info for profile
-		String sqlQuery = "SELECT name,username,bio,location,country,userid FROM users JOIN profile ON (profile.user_id = ?) WHERE users.userid = ? ;";
+		String sqlQuery = "SELECT name,username,bio,location,country,userid,permission FROM users JOIN profile ON (profile.user_id = ?) WHERE users.userid = ? ;";
 		//Query to retrieve number of people the user is following
 		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
 		//Query to retrieve number of followers the user has
@@ -587,6 +588,7 @@ public class ProfileModel {
 				ps.setLocation(rs.getString("location"));
 				ps.setCountry(rs.getString("country"));
 				ps.setUserid(id);
+				ps.setPermission(rs.getInt("permission"));
 
 			}
 			
