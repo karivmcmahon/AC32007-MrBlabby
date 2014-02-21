@@ -201,7 +201,7 @@ public class TweetModel {
 		int id = u.getUserid();
 		
 		//Set up query to get specific users tweets
-		String sqlQuery = "SELECT tweet,time,name,username,tweetid FROM tweets JOIN users WHERE userid = ? AND tweets.user_tweet_id = ? ORDER BY time DESC;";
+		String sqlQuery = "SELECT tweet,time,name,username,tweetid,userid FROM tweets JOIN users WHERE userid = ? AND tweets.user_tweet_id = ? ORDER BY time DESC;";
 		
 		
 		try {
@@ -246,6 +246,107 @@ public class TweetModel {
 			    ps.setName(rs.getString("name"));
 			    ps.setUsername(rs.getString("username"));
 			    ps.setTweetid(rs.getInt("tweetid"));
+			    ps.setUserid(rs.getInt("userid"));
+				psl.add(ps);
+			}
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("Opps, error in query getOwnTweets " + ex);
+			return null;
+		}
+
+		try {
+
+			Conn.close();
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("Connection could not close");
+			return null;
+		}
+		//Return linked list
+		return psl;
+	
+	
+	}
+	
+	/**
+	 * Get tweets from one certain user by username
+	 * @param u
+	 * @return LinkedList
+	 */
+	public LinkedList<TweetStore> getOwnTweetsByUsername(String u)
+	{
+		//Linked list to store tweets
+		LinkedList<TweetStore> psl = new LinkedList<TweetStore>();
+		//Connection var to store connection
+		Connection Conn;
+		TweetStore ps = null;
+		//Resultset to store results from querys
+		ResultSet rs = null;
+		try 
+		{
+			//Set up connection
+			Conn = _ds.getConnection();
+		} 
+		catch (Exception et)
+		{
+			//Display connection could not be set up
+			System.out.println("No Connection in Tweets Model getOwnTweets()");
+			return null;
+		}
+		//Set up prepared statement
+		PreparedStatement pmst = null;
+
+		
+		//Set up query to get specific users tweets
+		String sqlQuery = "SELECT tweet,time,name,username,tweetid,userid FROM tweets JOIN users WHERE username = ? AND tweets.user_tweet_id = userid ORDER BY time DESC;";
+		
+		
+		try {
+			try
+			{
+				//Prepare statement with user id
+				pmst = Conn.prepareStatement(sqlQuery);
+				pmst.setString(1, u);
+			
+				
+			} 
+			catch (Exception et)
+			{
+				System.out.println("Can't create prepare statement getOwnTweets");
+				return null;
+			}
+			
+			try 
+			{
+				//Execute query
+				rs = pmst.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Display error if query cant be execueted
+				System.out.println("Can not execute query getOwnTweets " + et);
+				return null;
+			}
+			
+			if (rs.wasNull()) 
+			{
+				System.out.println("Result set was null getOwnTweets");
+			} 
+			while (rs.next()) 
+			{
+				//Get and set information from result set
+				ps = new TweetStore();
+				ps.setTweet(rs.getString("tweet"));
+				ps.setTime(rs.getTimestamp("time"));
+			    ps.setName(rs.getString("name"));
+			    ps.setUsername(rs.getString("username"));
+			    ps.setTweetid(rs.getInt("tweetid"));
+			    ps.setUserid(rs.getInt("userid"));
 				psl.add(ps);
 			}
 		} 
@@ -370,7 +471,7 @@ public class TweetModel {
 	}
 	
 	/**
-	 * Get tweets based on id
+	 * Get tweets based on username
 	 * @param u
 	 * @return LinkedList
 	 */
@@ -401,7 +502,7 @@ public class TweetModel {
 		
 		
 		//Set up query to get specific users tweets
-		String sqlQuery = "SELECT tweet,time,name,username,user_tweet_id FROM tweets JOIN users WHERE users.username = ? AND tweets.user_tweet_id = users.userid ORDER BY time DESC;";
+		String sqlQuery = "SELECT tweet,time,name,username,user_tweet_id,userid FROM tweets JOIN users WHERE users.username = ? AND tweets.user_tweet_id = users.userid ORDER BY time DESC;";
 		
 		
 		try {
@@ -445,6 +546,108 @@ public class TweetModel {
 				ps.setTime(rs.getTimestamp("time"));
 			    ps.setName(rs.getString("name"));
 			    ps.setUsername(rs.getString("username"));
+			    ps.setUserid(rs.getInt("userid"));
+				psl.add(ps);
+			}
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("Opps, error in query getTweetsByUsername() " + ex);
+			return null;
+		}
+
+		try {
+
+			Conn.close();
+		} 
+		catch (Exception ex) 
+		{
+			System.out.println("Connection could not close");
+			return null;
+		}
+		//Return linked list
+		return psl;
+	
+	
+	}
+	
+	/**
+	 * Get tweets based on user id
+	 * @param u
+	 * @return LinkedList
+	 */
+	public LinkedList<TweetStore> getTweetsByID(int id)
+	{
+		//Linked list to store tweets
+		LinkedList<TweetStore> psl = new LinkedList<TweetStore>();
+		//Connection var to store connection
+		Connection Conn;
+		TweetStore ps = null;
+		//Resultset to store results from querys
+		ResultSet rs = null;
+		try 
+		{
+			//Set up connection
+			Conn = _ds.getConnection();
+		} 
+		catch (Exception et)
+		{
+			//Display connection could not be set up
+			System.out.println("No Connection in Tweets Model getTweetsByUsername()");
+			return null;
+		}
+		//Set up prepared statement
+		PreparedStatement pmst = null;
+		
+		
+		
+		//Set up query to get specific users tweets
+		String sqlQuery = "SELECT tweet,time,name,username,user_tweet_id,userid FROM tweets JOIN users WHERE users.userid = ? AND tweets.user_tweet_id = ? ORDER BY time DESC;";
+		
+		
+		try {
+			try
+			{
+				//Prepare statement with user id
+				pmst = Conn.prepareStatement(sqlQuery);
+				pmst.setInt(1, id);
+				pmst.setInt(2, id);
+
+				
+			} 
+			catch (Exception et)
+			{
+				System.out.println("Can't create prepare statement getTweetsByUsername()");
+				return null;
+			}
+			
+			try 
+			{
+				//Execute query
+				rs = pmst.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Display error if query cant be execueted
+				System.out.println("Can not execute query getTweetsByUsername() " + et);
+				return null;
+			}
+			
+			if (rs.wasNull()) 
+			{
+				System.out.println("Result set was null getTweetsByUsername()");
+			} 
+			while (rs.next()) 
+			{
+				
+				ps = new TweetStore();
+				ps.setTweet(rs.getString("tweet"));
+				ps.setTime(rs.getTimestamp("time"));
+			    ps.setName(rs.getString("name"));
+			    ps.setUsername(rs.getString("username"));
+			    ps.setUserid(rs.getInt("userid"));
 				psl.add(ps);
 			}
 		} 

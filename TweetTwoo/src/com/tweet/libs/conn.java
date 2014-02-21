@@ -248,7 +248,7 @@ public class conn {
 			Connection conn=null;
 			try {
 			   Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-			   conn = DriverManager.getConnection (url, "root", "root");
+			   conn = DriverManager.getConnection (url, "root", "Cl1m8t3;");
 
 			}catch (Exception et){
 				System.out.println("Can't get conenction to create schema "+et);

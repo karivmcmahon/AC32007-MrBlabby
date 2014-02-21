@@ -74,14 +74,16 @@ public class ProfileModel {
 		PreparedStatement pmst3 = null;
 		PreparedStatement pmst4 = null;
 		
+		
 		//Query to retrieve info for profile
-		String sqlQuery = "SELECT name,username,bio,location,country FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
+		String sqlQuery = "SELECT name,username,bio,location,country,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.userid = ? ;";
 		//Query to retrieve number of people the user is following
 		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
 		//Query to retrieve number of followers the user has
 		String sqlQueryFollower = "SELECT COUNT(user_id) FROM followrelationships WHERE following_id = ? ;";
 		//Query amount of tweets
 		String sqlQueryTweet = "SELECT COUNT(tweetid) FROM tweets WHERE user_tweet_id = ?;";
+		
 		
 		try {
 			try {
@@ -130,6 +132,7 @@ public class ProfileModel {
 				ps.setBio(rs.getString("bio"));
 				ps.setLocation(rs.getString("location"));
 				ps.setCountry(rs.getString("country"));
+				ps.setUserid(rs.getInt("userid"));
 
 			}
 			
@@ -153,6 +156,7 @@ public class ProfileModel {
 			} 
 			while(rs2.next())
 			{
+				
 				//Sets up follower count
 				ps.setFollowingCount(rs2.getInt("COUNT(following_id)"));
 				
@@ -219,6 +223,513 @@ public class ProfileModel {
 	}
 				
 		 
+		
+		
+		try 
+		{
+			//Close connection
+			Conn.close();
+		} 
+		catch (Exception ex) 
+		{
+			//return null
+			return null;
+		}
+		//Return profile list
+		return psl;
+	} 
+	
+	
+	/**
+	 * Gets profile for user by username
+	 * @param u
+	 * @return LinkedList ProfileStore
+	 */
+	public LinkedList<ProfileStore> getProfileByUsername(String u,UserStore us)
+	{
+		//Stores profile
+		LinkedList<ProfileStore> psl = new LinkedList<ProfileStore>();
+		//Store conn
+		Connection Conn;
+		//Set up profile store
+		ProfileStore ps = null;
+		//Set up result sets for storing sql query
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ResultSet rs3 = null;
+		ResultSet rs4 = null;
+		ResultSet rs5 = null;
+		
+		int currUser = us.getUserid();
+
+		
+		try 
+		{
+			//Gets connection
+			Conn = _ds.getConnection();
+		} 
+		catch (Exception et)
+		{
+			//Display error if we cant get connection
+			System.out.println("No Connection in the Profile Model getProfile()");
+			return null;
+		}
+
+		//Set up prepared statements
+		PreparedStatement pmst = null;
+		PreparedStatement pmst2 = null;
+		PreparedStatement pmst3 = null;
+		PreparedStatement pmst4 = null;
+		PreparedStatement pmst5 = null;
+		int id = 0;
+		
+		//Query to retrieve info for profile
+		String sqlQuery = "SELECT name,username,bio,location,country,userid FROM users JOIN profile ON (profile.user_id = users.userid) WHERE users.username = ? ;";
+		//Query to retrieve number of people the user is following
+		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
+		//Query to retrieve number of followers the user has
+		String sqlQueryFollower = "SELECT COUNT(user_id) FROM followrelationships WHERE following_id = ? ;";
+		//Query amount of tweets
+		String sqlQueryTweet = "SELECT COUNT(tweetid) FROM tweets WHERE user_tweet_id = ?;";
+		//Get if the user is following this person
+		String sqlQueryUserFollowing = "SELECT following_id FROM followrelationships WHERE user_id = ? AND following_id = ?;";
+		
+		try {
+			try {
+				//Set up prepared statements with the username
+				pmst = Conn.prepareStatement(sqlQuery);
+				pmst.setString(1, u);
+				
+			} 
+			catch (Exception et)
+			{
+				//Prints that prepared statement can't be created 
+				System.out.println("Can't create prepared statement");
+				return null;
+			}
+			
+			try 
+			{
+				//Execute query for profile
+				rs = pmst.executeQuery();
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays query 1 cant be executed
+				System.out.println("Can not execute profile query 1 " + et);
+				return null;
+			}
+			
+			if (rs.wasNull())
+			{
+				//Display result set was null
+				System.out.println("Result set 1 was null");
+			} 
+			while (rs.next()) 
+			{
+				//Gets info from query
+				
+				ps = new ProfileStore();
+				id = rs.getInt("userid");
+				ps.setName(rs.getString("name"));
+				ps.setUsername(rs.getString("username"));
+				ps.setBio(rs.getString("bio"));
+				ps.setLocation(rs.getString("location"));
+				ps.setCountry(rs.getString("country"));
+				ps.setUserid(id);
+
+			}
+			
+			try 
+			{
+				pmst2 = Conn.prepareStatement(sqlQueryFollowing);
+				pmst2.setInt(1, id);
+				//Execute query for follower count
+				rs2 = pmst2.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays that query 3 could not be executed
+				System.out.println("Can not execute query 2 " + et);
+				return null;
+			}
+			if (rs2.wasNull()) 
+			{
+				//Displays that result set 3 was null
+				System.out.println("Result set 2 was null");
+			} 
+			while(rs2.next())
+			{
+				//Sets up follower count
+				ps.setFollowingCount(rs2.getInt("COUNT(following_id)"));
+				
+			}
+
+			
+			try 
+			{
+				pmst3 = Conn.prepareStatement(sqlQueryFollower);
+				pmst3.setInt(1,id);
+				//Execute query for follower count
+				rs3 = pmst3.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays that query 3 could not be executed
+				System.out.println("Can not execute query 3 " + et);
+				return null;
+			}
+			if (rs3.wasNull()) 
+			{
+				//Displays that result set 3 was null
+				System.out.println("Result set 3 was null");
+			} 
+			while(rs3.next())
+			{
+				//Sets up follower count
+				ps.setFollowerCount(rs3.getInt("COUNT(user_id)"));
+				
+			}
+			
+		
+		try 
+		{
+			pmst4 = Conn.prepareStatement(sqlQueryTweet);
+			pmst4.setInt(1,id);
+			//Execute query for follower count
+			rs4 = pmst4.executeQuery();
+			
+			
+		} 
+		catch (Exception et) 
+		{
+			//Displays that query 4 could not be executed
+			System.out.println("Can not execute query 4 " + et);
+			return null;
+		}
+		if (rs4.wasNull()) 
+		{
+			//Displays that result set 5 was null
+			System.out.println("Result set 4 was null");
+		} 
+		while(rs4.next())
+		{
+			//Get tweet count
+			ps.setTweetCount(rs4.getInt("COUNT(tweetid)"));
+			
+		}
+		
+		try 
+		{
+			pmst5 = Conn.prepareStatement(sqlQueryUserFollowing);
+			pmst5.setInt(1,currUser);
+			pmst5.setInt(2, id);
+			//Execute query to find out if they are following user
+			rs5 = pmst5.executeQuery();
+			
+			
+		} 
+		catch (Exception et) 
+		{
+			//Displays that query 4 could not be executed
+			System.out.println("Can not execute query 5 " + et);
+			return null;
+		}
+		if (rs5.wasNull()) 
+		{
+			//Displays that result set 5 was null
+			//if null set following to false
+			System.out.println("Result set 5 was null");
+			ps.setFollowing(false);
+		} 
+		while(rs5.next())
+		{
+			//if not set following to treu
+			ps.setFollowing(true);
+			
+			
+			
+		}
+		
+	}
+	catch(Exception e)
+	{
+		//Displays an error has occurred in this method
+		System.out.println("Error in getProfileByUsername() in ProfileModel");
+	}
+		
+		if(ps == null)
+		{
+			return null;
+		}
+		else
+		{
+		//Add profile store to linked list
+		psl.add(ps);
+		}
+		
+		try 
+		{
+			//Close connection
+			Conn.close();
+		} 
+		catch (Exception ex) 
+		{
+			//return null
+			return null;
+		}
+		//Return profile list
+		return psl;
+	} 
+	
+	
+	/**
+	 * Gets profile for user by user id
+	 * @param u
+	 * @return LinkedList ProfileStore
+	 */
+	public LinkedList<ProfileStore> getProfileByID(int u,UserStore us)
+	{
+		//Stores profile
+		LinkedList<ProfileStore> psl = new LinkedList<ProfileStore>();
+		//Store conn
+		Connection Conn;
+		//Set up profile store
+		ProfileStore ps = null;
+		//Set up result sets for storing sql query
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ResultSet rs3 = null;
+		ResultSet rs4 = null;
+		ResultSet rs5 = null;
+		//Get logged in users user id
+		int currUser = us.getUserid();
+
+		
+		try 
+		{
+			//Gets connection
+			Conn = _ds.getConnection();
+		} 
+		catch (Exception et)
+		{
+			//Display error if we cant get connection
+			System.out.println("No Connection in the Profile Model getProfile()");
+			return null;
+		}
+
+		//Set up prepared statements
+		PreparedStatement pmst = null;
+		PreparedStatement pmst2 = null;
+		PreparedStatement pmst3 = null;
+		PreparedStatement pmst4 = null;
+		PreparedStatement pmst5 = null;
+		int id = 0;
+		
+		//Query to retrieve info for profile
+		String sqlQuery = "SELECT name,username,bio,location,country,userid FROM users JOIN profile ON (profile.user_id = ?) WHERE users.userid = ? ;";
+		//Query to retrieve number of people the user is following
+		String sqlQueryFollowing = "SELECT COUNT(following_id) FROM followrelationships WHERE user_id = ? ;";
+		//Query to retrieve number of followers the user has
+		String sqlQueryFollower = "SELECT COUNT(user_id) FROM followrelationships WHERE following_id = ? ;";
+		//Query amount of tweets
+		String sqlQueryTweet = "SELECT COUNT(tweetid) FROM tweets WHERE user_tweet_id = ?;";
+		//Query to retrieve who if the user is following this person
+		String sqlQueryUserFollowing = "SELECT following_id FROM followrelationships WHERE user_id = ? AND following_id = ?;";
+		
+		try {
+			try {
+				//Set up prepared statements with the user id
+				pmst = Conn.prepareStatement(sqlQuery);
+				pmst.setInt(1, u);
+				pmst.setInt(2,u);
+				
+			} 
+			catch (Exception et)
+			{
+				//Prints that prepared statement can't be created 
+				System.out.println("Can't create prepared statement");
+				return null;
+			}
+			
+			try 
+			{
+				//Execute query for profile
+				rs = pmst.executeQuery();
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays query 1 cant be executed
+				System.out.println("Can not execute profile query 1 " + et);
+				return null;
+			}
+			
+			if (rs.wasNull())
+			{
+				//Display result set was null
+				System.out.println("Result set 1 was null");
+			} 
+			while (rs.next()) 
+			{
+				//Gets info from query
+				
+				ps = new ProfileStore();
+				id = rs.getInt("userid");
+				ps.setName(rs.getString("name"));
+				ps.setUsername(rs.getString("username"));
+				ps.setBio(rs.getString("bio"));
+				ps.setLocation(rs.getString("location"));
+				ps.setCountry(rs.getString("country"));
+				ps.setUserid(id);
+
+			}
+			
+			try 
+			{
+				pmst2 = Conn.prepareStatement(sqlQueryFollowing);
+				pmst2.setInt(1, id);
+				//Execute query for follower count
+				rs2 = pmst2.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays that query 3 could not be executed
+				System.out.println("Can not execute query 2 " + et);
+				return null;
+			}
+			if (rs2.wasNull()) 
+			{
+				//Displays that result set 3 was null
+				System.out.println("Result set 2 was null");
+			} 
+			while(rs2.next())
+			{
+				//Sets up following count
+				ps.setFollowingCount(rs2.getInt("COUNT(following_id)"));
+				
+			}
+
+			
+			try 
+			{
+				pmst3 = Conn.prepareStatement(sqlQueryFollower);
+				pmst3.setInt(1,id);
+				//Execute query for following count
+				rs3 = pmst3.executeQuery();
+				
+				
+			} 
+			catch (Exception et) 
+			{
+				//Displays that query 3 could not be executed
+				System.out.println("Can not execute query 3 " + et);
+				return null;
+			}
+			if (rs3.wasNull()) 
+			{
+				//Displays that result set 3 was null
+				System.out.println("Result set 3 was null");
+			} 
+			while(rs3.next())
+			{
+				//Sets up follower count
+				ps.setFollowerCount(rs3.getInt("COUNT(user_id)"));
+				
+			}
+			
+		
+		try 
+		{
+			pmst4 = Conn.prepareStatement(sqlQueryTweet);
+			pmst4.setInt(1,id);
+			//Execute query for follower count
+			rs4 = pmst4.executeQuery();
+			
+			
+		} 
+		catch (Exception et) 
+		{
+			//Displays that query 4 could not be executed
+			System.out.println("Can not execute query 4 " + et);
+			return null;
+		}
+		if (rs4.wasNull()) 
+		{
+			//Displays that result set 4 was null
+			System.out.println("Result set 4 was null");
+		} 
+		while(rs4.next())
+		{
+			//Get tweet count
+			ps.setTweetCount(rs4.getInt("COUNT(tweetid)"));
+			
+		}
+		
+	}
+	catch(Exception e)
+	{
+		//Displays an error has occurred in this method
+		System.out.println("Error in getProfileByID() in ProfileModel");
+	}
+	try
+	{
+		try 
+		{
+			pmst5 = Conn.prepareStatement(sqlQueryUserFollowing);
+			pmst5.setInt(1,currUser);
+			pmst5.setInt(2, id);
+			//Execute query to find if they are following user
+			rs5 = pmst5.executeQuery();
+			
+			
+		} 
+		catch (Exception et) 
+		{
+			//Displays that query 5 could not be executed
+			System.out.println("Can not execute query 5 " + et);
+			return null;
+		}
+		if (rs5.wasNull()) 
+		{
+			//Displays that result set 5 was null and set following to false
+			System.out.println("Result set 5 was null");
+			ps.setFollowing(false);
+		} 
+		while(rs5.next())
+		{
+			//set following to true
+			ps.setFollowing(true);
+			
+			 
+						
+			
+			
+		}
+		
+	}
+	catch(Exception e)
+	{
+		System.out.println("Error in getProfileByID()");
+	}
+	
+	
+		 if(ps == null)
+		 {
+			 return null;
+		 }
+		 else
+		 {
+			//Add profile store to linked list
+				psl.add(ps);
+		 }
 		
 		
 		try 

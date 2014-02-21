@@ -53,7 +53,7 @@ function deleteTweet(tweetID)
 			List<ProfileStore> prof = (List<ProfileStore>)request.getAttribute("Profiles");
 			if (prof==null){
 	 		%>
-				<p>No profile found</p>
+				<p class="whiteFont">No profile found</p>
 			<% 
 			}
 			else
@@ -66,28 +66,64 @@ function deleteTweet(tweetID)
 	
 	
 			iterator = prof.iterator();     
-			while (iterator.hasNext())
-			{
-				ProfileStore md = (ProfileStore)iterator.next();
-	
-			%>
-			
-				<p class="bolderFont"><%=md.getName() %></p>
-				<img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
-				<br>
-				<span class="userFont">@<%=md.getUsername() %></span>
-				<p class="boldishFont"><%=md.getBio() %><br> <%=md.getLocation() %>,<%=md.getCountry() %> </p>
-				<p class="userFont"><%=md.getTweetCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-				<%=md.getFollowerCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<%=md.getFollowingCount() %><br><span class="boldishFont">Tweets &nbsp;&nbsp;&nbsp;   Followers         Following</span></p><%
+				if(!iterator.hasNext())
+				{ %>
+					<p class="whiteFont">No profile found</p>
+				
+				<% 
+				}
+				else
+				{
+					while (iterator.hasNext())
+					{
+								ProfileStore md = (ProfileStore)iterator.next();
+					
+							%>
+					
+							<p class="bolderFont"><%=md.getName() %></p>
+							<img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
+							<br>
+							<span class="userFont">@<%=md.getUsername() %></span>
+							<p class="boldishFont"><%=md.getBio() %><br> <%=md.getLocation() %>,<%=md.getCountry() %> </p>
+							<p class="userFont"><%=md.getTweetCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							<%=md.getFollowerCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<%=md.getFollowingCount() %><br><span class="boldishFont">Tweets &nbsp;&nbsp;&nbsp;   Followers         Following</span></p><%
+						
+					
+							UserStore u = new UserStore();
+							u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+							if(md.getUserid() == u.getUserid())
+							{
+							%>
+							
+							<form action="${pageContext.request.contextPath}/EditProfile" method="get" >
+								<input type="submit" value="Edit Profile" class="button" >
+							</form>
+							<%
+							}
+							if(md.getFollowing() == true && md.getUserid() != u.getUserid())
+							{
+							%>	
+							<form action="${pageContext.request.contextPath}/Following" method="post">
+								<input type="submit" value="Unfollow" class="button" >
+								<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
+							</form>
+							<%
+							}
+							else if(md.getFollowing() == false && md.getUserid() != u.getUserid() )
+							{
+							%>
+							<!-- If not following enable them to follow -->
+							<form action="${pageContext.request.contextPath}/Follower" method="post">
+								<input type="submit" value="Follow" class="button" >
+								<input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
+							</form>
+							<%
+							}
+				}
 			}
-			}
-	
+		}
 			%>
-			
-			<form action="${pageContext.request.contextPath}/EditProfile" method="get" >
-				<input type="submit" value="Edit Profile" class="button" >
-			</form>
 		</div>
 	
 		<!--  This div area displays the users own tweets -->
@@ -105,42 +141,47 @@ function deleteTweet(tweetID)
 			}
 			else
 			{
-			%>
-
-
-			<% 
-			Iterator<TweetStore> iterator;
-			
-
-			iterator = tweets.iterator();  
-			if(!iterator.hasNext())
-			{%>
-				<p class="whiteFont">Could not find any of your tweets.</p>
-			<% 
-			}
-			else
-			{
-			while (iterator.hasNext()){
-			TweetStore md = (TweetStore)iterator.next();
-
-			%>
+			 
+				Iterator<TweetStore> iterator;
+				
 	
-				<div class="tweetDiv"> 
-				 	<br/>
-					<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
-					<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span>
-					<span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br>
-					<span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span>
-					<input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
-					<br/> <br/><br/>
-				</div>
-			<%
-			}
-			}
-			}
+				iterator = tweets.iterator();  
+				if(!iterator.hasNext())
+				{
+				%>
+					<p class="whiteFont">Could not find any of your tweets.</p>
+				<% 
+				}
+				else
+				{
+					
+				while (iterator.hasNext()){
+				TweetStore md = (TweetStore)iterator.next();
+				UserStore u = new UserStore();
+				u = (UserStore)request.getSession().getAttribute("currentSeshUser");
+	
+				%>
 		
-			%>
-			
+					<div class="tweetDiv"> 
+					 	<br/>
+						<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+						<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span>
+						<span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br>
+						<span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span>
+						<% if(md.getUserid() == u.getUserid())
+							{ 
+						%>
+						<input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
+						<%} %>
+						<br/> <br/><br/>
+					</div>
+				<%
+				}
+			}
+		}
+	
+				%>
+				
 	</div>
 	
 	<jsp:include page="Footer.jsp" />

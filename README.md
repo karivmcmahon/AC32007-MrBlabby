@@ -37,6 +37,10 @@ TweetTwoo/Logout/doGet - Logs user out
 
 TweetTwoo/Profile/doGet - Gets users profile for display and gets users own tweets for display
 
+TweetTwoo/Profile/id - Gets users profile based on the users id
+
+TweetTwoo/Profile/username - Gets users profile based on users username
+
 TweetTwoo/Profile/json - Gets a json object of users own tweets (Must have gson jar in tomcat lib for this to work)
 
 TweetTwoo/EditProfile/doGet - Gets users profile information for edit textboxes
