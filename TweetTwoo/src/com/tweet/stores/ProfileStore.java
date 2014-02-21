@@ -4,7 +4,7 @@ import java.sql.Blob;
 
 /**
  * Profile store stores information to create user profiles
- * @author Kari
+ * @author Kari McMahon
  *
  */
 

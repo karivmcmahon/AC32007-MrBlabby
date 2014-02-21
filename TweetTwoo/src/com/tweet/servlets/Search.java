@@ -88,6 +88,7 @@ public class Search extends HttpServlet {
 			 psl = model.findUser(name,u);
 			}catch(Exception e)
 			{
+				//else make linked list null
 			  psl = null;
 			}
 			//Then send linked list to Search.jsp

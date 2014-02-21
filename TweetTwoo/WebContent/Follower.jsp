@@ -23,6 +23,7 @@ function()
 $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+
 <title>Tweet-Twoo!</title>
 </head>
 <body class="general">
@@ -31,6 +32,8 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower 
 		
 	
 	<div class="main">
+	
+		<!-- Div displays users followers -->
 		<div class="timeline">
 				<p class="bolderFont">Your followers :</p>
 				<div id="loaddiv">
@@ -63,11 +66,13 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Follower 
 			%>
 			<div class="tweetDiv"> 
 			 <br/>
-			<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
-			<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
-			<span class="pinkFont">@<%=md.getUsername() %><br></span>
-			<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %></span><br>
-			<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
+				<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+				<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
+				<span class="pinkFont">@<%=md.getUsername() %><br></span>
+				<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %></span>
+				<br>
+				<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span>
+				<br>
 			<br/> <br/><br/>
 			</div>
 			<%

@@ -60,7 +60,7 @@ public class Register extends HttpServlet {
 	}
 
 	/**
-	 * 
+	 * Enables us to get information from view and send it to model so we can register user in database
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -105,6 +105,7 @@ public class Register extends HttpServlet {
 		}
 		else
 		{
+			//Sets error that user could not be registered
 			u.setError("Could not register user");
 			request.setAttribute("Users", u);
 			 //forward tweets to Home.jsp

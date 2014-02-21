@@ -23,6 +23,7 @@ function()
 $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("slow");
 }, 60000);
 </script>
+
 <title>Tweet-Twoo!</title>
 </head>
 <body class="general">
@@ -30,11 +31,14 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("sl
 <jsp:include page="Header.jsp" />
 	
 	<div class="main">
+	
+	<!-- Div displays user suggestions -->
 	<div class="timeline">
 		<p class="bolderFont">Suggestions based on who you follow:</p>
 		<div id="loaddiv">
 		<% 	List<ProfileStore> suggestions = (List<ProfileStore>)request.getAttribute("Suggestions");
-			if (suggestions==null){
+			if (suggestions==null)
+			{
 			 %>
 				<p class="whiteFont">No suggestions for you were found</p>
 			<% 
@@ -60,15 +64,15 @@ $('#loaddiv').fadeOut('fast').load('/TweetTwoo/Suggestions #loaddiv').fadeIn("sl
 		
 			%>
 			<form action="/TweetTwoo/Follower" method="post">
-			<div class="tweetDiv"> 
-			 <br/>
-			<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
-			<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
-			<span class="pinkFont" >@<%=md.getUsername() %><br></span><input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
-			<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %><input type="submit" value="Follow" class="button" style="margin-left:70%"></span><br>
-			<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
-			<br/> <br/><br/>
-			</div>
+				<div class="tweetDiv"> 
+				 <br/>
+				<span class="regFont"><img src="images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+				<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
+				<span class="pinkFont" >@<%=md.getUsername() %><br></span><input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
+				<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %><input type="submit" value="Follow" class="button" style="margin-left:70%"></span><br>
+				<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
+				<br/> <br/><br/>
+				</div>
 			</form>
 			<%
 			}

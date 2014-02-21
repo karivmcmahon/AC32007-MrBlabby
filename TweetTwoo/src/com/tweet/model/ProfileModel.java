@@ -14,6 +14,11 @@ import com.tweet.stores.ProfileStore;
 import com.tweet.stores.TweetStore;
 import com.tweet.stores.UserStore;
 
+/**
+ * Class gets users profile information, updates users profile information and enables deletes of user accounts
+ * @author Kari
+ *
+ */
 public class ProfileModel {
 	//Set Datasource to null
 	private DataSource _ds = null;
@@ -323,6 +328,7 @@ public class ProfileModel {
 		} 
 		catch (Exception ex) 
 		{
+		    System.out.println("Connection could not close");
 			//return null
 			return null;
 		}
@@ -455,6 +461,7 @@ public void deleteAccount(int id)
 	
 	try 
 	{
+		//executes update
 		pmst.executeUpdate();
 	} 
 	catch (SQLException e1) 

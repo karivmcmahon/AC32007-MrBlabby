@@ -12,6 +12,12 @@ import com.tweet.stores.ProfileStore;
 import com.tweet.stores.TweetStore;
 import com.tweet.stores.UserStore;
 
+/**
+ * Class for dealing with who the user is following and enabling them to unfollow who they are following. It also features
+ * the method for giving suggestions based on who the user is following.
+ * @author Kari McMahon
+ *
+ */
 public class FollowingModel {
 	//Store data source
 	private DataSource _ds = null;
@@ -130,6 +136,7 @@ public class FollowingModel {
 			   
 			    while(rs2.next())
 			    {
+			    	//Store information from second query
 			    	ps.setName(rs2.getString("name"));
 			    	ps.setUsername(rs2.getString("username"));
 			    	ps.setBio(rs2.getString("bio"));
@@ -385,6 +392,7 @@ public class FollowingModel {
 				
 				try
 				{
+					//Attempt to prepare second query
 					pmst2 = Conns.prepareStatement(sqlQuery2);
 					pmst2.setInt(1,ids);
 					pmst2.setInt(2, ids);
@@ -395,6 +403,7 @@ public class FollowingModel {
 				
 				try
 				{
+					//Execute second query
 					rs2 = pmst2.executeQuery();
 				}catch(Exception e)
 				{
@@ -403,7 +412,7 @@ public class FollowingModel {
 			    
 			    while(rs2.next())
 			    {
-			    	
+			    	//Get and set information from second query
 			    	ps.setName(rs2.getString("name"));
 			    	ps.setUsername(rs2.getString("username"));
 			    	ps.setBio(rs2.getString("bio"));

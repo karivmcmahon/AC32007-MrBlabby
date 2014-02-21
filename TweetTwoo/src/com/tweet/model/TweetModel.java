@@ -13,6 +13,11 @@ import javax.sql.DataSource;
 
 import com.tweet.stores.*;
 
+/**
+ * This class deals with getting or updating any tweet information in database
+ * @author Kari McMahon
+ *
+ */
 public class TweetModel {
 	//Store data source
 	private DataSource _ds = null;
@@ -234,7 +239,7 @@ public class TweetModel {
 			} 
 			while (rs.next()) 
 			{
-				
+				//Get and set information from result set
 				ps = new TweetStore();
 				ps.setTweet(rs.getString("tweet"));
 				ps.setTime(rs.getTimestamp("time"));

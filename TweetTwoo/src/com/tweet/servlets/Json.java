@@ -39,6 +39,8 @@ public class Json extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		 	
+			//****Must have google GSON jar in tomcat lib for this to work ******
+		
 			//Creates new gson
 			Gson gson = new Gson();
 

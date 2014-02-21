@@ -8,12 +8,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <link href="${pageContext.request.contextPath}/css/stylesheet.css" rel="Stylesheet" type="text/css"></link>
 <link href='http://fonts.googleapis.com/css?family=Vibur' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 <!-- Ajax script to delete a user account -->
 <script>
 function deleteAccount(userID)
@@ -65,6 +67,8 @@ function validateUpdate()
 <jsp:include page="Header.jsp" />
 	
 	<div class="main">
+	
+	<!-- Div displays textboxes for user to edit their profile -->
 	<div class="timeline">
 		
 		

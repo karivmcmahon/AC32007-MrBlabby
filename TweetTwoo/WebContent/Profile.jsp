@@ -16,6 +16,7 @@
 <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/rotate100owl.png" type="image/png">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+<!-- Ajax script to enable user to delete their own tweets -->
 <script>
 function deleteTweet(tweetID)
 {
@@ -46,46 +47,50 @@ function deleteTweet(tweetID)
 	<jsp:include page="Header.jsp" />
 	
 	<div class="main">
-	<div class="timeline">
-		<% 	
-		List<ProfileStore> prof = (List<ProfileStore>)request.getAttribute("Profiles");
-		if (prof==null){
- 		%>
-			<p>No profile found</p>
-		<% 
-		}
-		else
-		{
-		%>
-
-
-		<% 
-		Iterator<ProfileStore> iterator;
-
-
-		iterator = prof.iterator();     
-		while (iterator.hasNext())
-		{
-			ProfileStore md = (ProfileStore)iterator.next();
-
-		%>
-		
-		<p class="bolderFont"><%=md.getName() %></p>
-		<img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
-		<br>
-		<span class="userFont">@<%=md.getUsername() %></span>
-		<p class="boldishFont"><%=md.getBio() %><br> <%=md.getLocation() %>,<%=md.getCountry() %> </p>
-		<p class="userFont"><%=md.getTweetCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <%=md.getFollowerCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=md.getFollowingCount() %><br><span class="boldishFont">Tweets &nbsp;&nbsp;&nbsp;   Followers         Following</span></p><%
-		}
-		}
-
-		%>
-		
-		<form action="${pageContext.request.contextPath}/EditProfile" method="get" >
-			<input type="submit" value="Edit Profile" class="button" >
-		</form>
-	</div>
+		<!--  This div displays the users profile -->
+		<div class="timeline">
+			<% 	
+			List<ProfileStore> prof = (List<ProfileStore>)request.getAttribute("Profiles");
+			if (prof==null){
+	 		%>
+				<p>No profile found</p>
+			<% 
+			}
+			else
+			{
+			%>
 	
+	
+			<% 
+			Iterator<ProfileStore> iterator;
+	
+	
+			iterator = prof.iterator();     
+			while (iterator.hasNext())
+			{
+				ProfileStore md = (ProfileStore)iterator.next();
+	
+			%>
+			
+				<p class="bolderFont"><%=md.getName() %></p>
+				<img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="profilePic" width="150px" height="150px" class="imgBorder">
+				<br>
+				<span class="userFont">@<%=md.getUsername() %></span>
+				<p class="boldishFont"><%=md.getBio() %><br> <%=md.getLocation() %>,<%=md.getCountry() %> </p>
+				<p class="userFont"><%=md.getTweetCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+				<%=md.getFollowerCount() %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<%=md.getFollowingCount() %><br><span class="boldishFont">Tweets &nbsp;&nbsp;&nbsp;   Followers         Following</span></p><%
+			}
+			}
+	
+			%>
+			
+			<form action="${pageContext.request.contextPath}/EditProfile" method="get" >
+				<input type="submit" value="Edit Profile" class="button" >
+			</form>
+		</div>
+	
+		<!--  This div area displays the users own tweets -->
 		<div class="timeline">
 			<p class="bolderFont">Your Tweet's : </p>
 			<%
@@ -120,17 +125,21 @@ function deleteTweet(tweetID)
 
 			%>
 	
-	<div class="tweetDiv"> 
-	 	<br/>
-		<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" /><span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span><span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br><span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span><input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
-		<br/> <br/><br/>
-	</div>
-	<%
-	}
-	}
-	}
-
-	%>
+				<div class="tweetDiv"> 
+				 	<br/>
+					<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+					<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;<span class="pinkFont">@<%=md.getUsername() %><br></span>
+					<span class="tweetFont" style="margin-left:2%;"><%=md.getTweet() %></span><br>
+					<span class="timeFont" style="margin-left:20%"><%=md.getTime() %></span>
+					<input type="image" class="images" onclick="deleteTweet(<%=md.getTweetid() %>)" src="${pageContext.request.contextPath}/images/trash-2-512.png" name="image" width="20" height="15" style="margin-left:95%"/></span>
+					<br/> <br/><br/>
+				</div>
+			<%
+			}
+			}
+			}
+		
+			%>
 			
 	</div>
 	

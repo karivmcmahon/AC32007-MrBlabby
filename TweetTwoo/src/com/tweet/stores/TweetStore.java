@@ -3,7 +3,7 @@ import java.sql.Timestamp;
 
 /**
  * Tweet store stores information that relates to tweets
- * @author Kari
+ * @author Kari McMahon
  *
  */
 public class TweetStore {

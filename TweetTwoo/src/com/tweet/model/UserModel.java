@@ -14,6 +14,11 @@ import com.tweet.stores.ProfileStore;
 import com.tweet.stores.TweetStore;
 import com.tweet.stores.UserStore;
 
+/**
+ * Class deals with the login and registering of users to and from the database
+ * @author Kari McMahon
+ *
+ */
 public class UserModel {
 	
 	private DataSource _ds = null;

@@ -88,8 +88,10 @@ public class Login extends HttpServlet {
 		//If user has logged into a valid account
 		if(user.getValid())
 		{
+			//Set user as logged in
 			user.setLoggedIn(true);
-			user.setError("");
+			//Set error to empty
+			user.setError2("");
 			//Set session to true and set it to an attribute
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentSeshUser", user);
@@ -99,8 +101,9 @@ public class Login extends HttpServlet {
 		}
 		else
 		{
+			//If it fails set user logged in as false
 			user.setLoggedIn(false);
-			user.setError("Could not log user in");
+			user.setError2("Could not log user in");
 			request.setAttribute("Users", user);
 			 //forward tweets to Home.jsp
 		     RequestDispatcher rd = request.getRequestDispatcher("/SignUp.jsp"); 

@@ -91,6 +91,7 @@ public class Profile extends HttpServlet {
 				//If json requested then get json of users own tweets
 				if(urlEnd.equals("json"))
 				{
+					//Send data to Json
 					request.setAttribute("data", tsl);
 		            System.out.println("l");
 		            request.getRequestDispatcher("/Json").forward(request, response);

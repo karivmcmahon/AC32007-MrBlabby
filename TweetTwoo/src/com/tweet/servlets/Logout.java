@@ -34,6 +34,7 @@ public class Logout extends HttpServlet {
     }
 
 	/**
+	 * Logs user out of session
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,7 +42,9 @@ public class Logout extends HttpServlet {
 		//Invalidate session and set user logged in false
 		UserStore u = new UserStore();
 		u = (UserStore) request.getSession().getAttribute("currentSeshUser");
+		//set the current user logged in as false
 		u.setLoggedIn(false);
+		//invalidate session
 		request.getSession().invalidate();
 		//Redirect user to sign up/log in page once they have logged out
 		response.sendRedirect("/TweetTwoo/SignUp.jsp");

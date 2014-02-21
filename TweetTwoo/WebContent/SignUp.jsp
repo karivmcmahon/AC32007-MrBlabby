@@ -81,46 +81,55 @@ function validateLogin()
 
 
 
-<div class="left">
-<p class="font"> Welcome to  <span class="tweetTwoo">Tweet-Twoo!</span>
-<br> <span class="italics">Discover The World</span>
-</p>
-</div>
+	<div class="left">
+		<p class="font"> Welcome to  <span class="tweetTwoo">Tweet-Twoo!</span>
+		<br> <span class="italics">Discover The World</span>
+		</p>
+	</div>
 
+<!-- Div contains form for registering user -->
 <div class="right">
-<p class = "regFont"><span class="boldFont">New ? </span> Sign Up </p>
-<form action="${pageContext.request.contextPath}/Register"  method="post" class="regFont2" name="registerForm" onsubmit="return validateRegister()">
-
-Name: <input type="text" name="name"><br>
-Username: <input type="text" name="newUsername"><br>
-Password: <input type="password" name="newPassword"><br>
-Email: <input type="text" name="newEmail"><br>
-<% UserStore u = new UserStore();
-   u = (UserStore)request.getAttribute("Users");
-   if(u != null)
-	   
-   {%>
-   <p class="errorFont"><%=u.getError()%></p>
-   <%} %>
-<input type="submit" value="Sign Up!" class="button">
-</form>
+	<p class = "regFont"><span class="boldFont">New ? </span> Sign Up </p>
+		<form action="${pageContext.request.contextPath}/Register"  method="post" class="regFont2" name="registerForm" onsubmit="return validateRegister()">
+		
+		Name: <input type="text" name="name"><br>
+		Username: <input type="text" name="newUsername"><br>
+		Password: <input type="password" name="newPassword"><br>
+		Email: <input type="text" name="newEmail"><br>
+		<% UserStore u = new UserStore();
+		   u = (UserStore)request.getAttribute("Users");
+		   if(u != null)
+			   
+		   {
+		   %>
+		   <p class="errorFont"><%=u.getError()%></p>
+		   <%
+		   } 
+		   %>
+		<input type="submit" value="Sign Up!" class="button">
+		</form>
 </div>
 
+<!-- Div contains form for logging user in -->
 <div class="signInRight">
 
- <p class="boldFont">Sign In </p>
- <form action="${pageContext.request.contextPath}/Login" method="post" class="regFont2" name="loginForm" onsubmit="return validateLogin()">
-Username: <input type="text" name="username"><br>
-Password: <input type="password" name="password"><br>
-<input type="submit" value="Sign In!" class="button">
-<% 
-   u = (UserStore)request.getAttribute("Users");
-   if(u != null)
-	   
-   {%>
-   <p class="errorFont"><%=u.getError()%></p>
-   <%} %>
-</form>
+	 <p class="boldFont">Sign In </p>
+	 <form action="${pageContext.request.contextPath}/Login" method="post" class="regFont2" name="loginForm" onsubmit="return validateLogin()">
+		Username: <input type="text" name="username"><br>
+		Password: <input type="password" name="password"><br>
+		<input type="submit" value="Sign In!" class="button">
+		<% 
+		
+		   u = (UserStore)request.getAttribute("Users");
+		   if(u != null)
+			   
+		 {
+		 %>
+		   <p class="errorFont"><%=u.getError2()%></p>
+		 <%
+		 } 
+		 %>
+	</form>
 </div>
 
 <jsp:include page="Footer.jsp" />

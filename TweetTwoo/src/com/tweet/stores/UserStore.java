@@ -2,7 +2,7 @@ package com.tweet.stores;
 
 /**
  * User store stores information relating to the specific user 
- * @author Kari
+ * @author Kari McMahon
  *
  */
 public class UserStore {
@@ -16,6 +16,7 @@ public class UserStore {
 	public boolean loggedIn = false;
 	public int permission;
 	public String error = "";
+	public String error2 = "";
 	public boolean delError = false;
 	
 	public void setPermission(int p)
@@ -36,6 +37,16 @@ public class UserStore {
 	public String getError()
 	{
 		return error;
+	}
+	
+	public void setError2(String e)
+	{
+		error2 = e;
+	}
+	
+	public String getError2()
+	{
+		return error2;
 	}
 	
 	public void setUserid(int id)

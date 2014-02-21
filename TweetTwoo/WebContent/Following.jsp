@@ -31,47 +31,51 @@ $('#loaddiv').fadeOut('fast').load('${pageContext.request.contextPath}/Following
 	<jsp:include page="Header.jsp" />
 	
 	<div class="main">
-	<div class="timeline">
-		<p class="bolderFont">Who you are following :</p>
-	<div id="loaddiv">
-	<% 	List<ProfileStore> following = (List<ProfileStore>)request.getAttribute("Following");
-	if (following==null){
-	 %>
-		<p class="whiteFont">You are not following anyone</p>
-	<% 
-	}
-	else
-	{
-	%>
-
-
-	<% 
-	Iterator<ProfileStore> iterator;
-
-
-	iterator = following.iterator(); 
-	if(!iterator.hasNext())
-	{%>
-		<p class="whiteFont">You are not following anyone</p>
-	<% 
-	}
-	else
-	{
-	while (iterator.hasNext()){
-	ProfileStore md = (ProfileStore)iterator.next();
-
-	%>
-	<form action="${pageContext.request.contextPath}/Following" method="post">
-	<div class="tweetDiv"> 
-	 <br/>
-	<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
-	<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
-	<span class="pinkFont">@<%=md.getUsername() %><br></span><input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
-	<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %><input type="submit" value="Unfollow" class="button" style="margin-left:70%"></span><br>
-	<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
-	<br/> <br/><br/>
-	</div>
-	</form>
+	
+		<!-- Div displays who the user is following and gives them the oppurtunity to unfollow them -->
+		<div class="timeline">
+			<p class="bolderFont">Who you are following :</p>
+			<div id="loaddiv">
+				<% 	List<ProfileStore> following = (List<ProfileStore>)request.getAttribute("Following");
+				if (following==null){
+				 %>
+					<p class="whiteFont">You are not following anyone</p>
+				<% 
+				}
+				else
+				{
+				%>
+		
+		
+				<% 
+				Iterator<ProfileStore> iterator;
+		
+		
+				iterator = following.iterator(); 
+				if(!iterator.hasNext())
+				{%>
+					<p class="whiteFont">You are not following anyone</p>
+				<% 
+				}
+				else
+				{
+				while (iterator.hasNext()){
+				ProfileStore md = (ProfileStore)iterator.next();
+		
+				%>
+				<form action="${pageContext.request.contextPath}/Following" method="post">
+					<div class="tweetDiv"> 
+			 		<br/>
+						<span class="regFont"><img src="${pageContext.request.contextPath}/images/twitter-egg-red.jpg" alt="" width="60px" height="60px" align="left" class="userimgBorder" />
+						<span class="whiteFont" style="margin-left:1%;"><%=md.getName() %></span>&nbsp;
+						<span class="pinkFont">@<%=md.getUsername() %><br></span><input type="hidden" name="userid" value="<%=md.getUserid() %>"/>
+						<span class="tweetFont" style="margin-left:2%;"><%=md.getBio() %>
+						<input type="submit" value="Unfollow" class="button" style="margin-left:70%">
+						</span><br>
+						<span class="tweetFont" style="margin-left:2%;"><%=md.getLocation() %>,<%=md.getCountry() %></span><br>
+						<br/> <br/><br/>
+					</div>
+			</form>
 	<%
 	}
 	}
